@@ -16,7 +16,7 @@ local Entities = {
 local NotificationSound = 4590662766
 local ErrorSound = 5188022160
 
-local Items = {"KeyObtain", "Lighter", "GoldPile", "LeverForGate", "Candle", "Crucifix", "LiveHintBook", "ElectricalKeyObtain", "LiveBreakerPolePickup", "FigureRagdoll"}
+local Items = {"KeyObtain", "Lighter", "GoldPile", "LeverForGate", "Candle", "Crucifix", "LiveHintBook", "ElectricalKeyObtain", "LiveBreakerPolePickup", "FigureRagdoll", "Vitamins"}
 local ItemColours = {
 
     Door = Color3.fromRGB(94, 255, 0);
@@ -26,6 +26,7 @@ local ItemColours = {
     LeverForGate = Color3.fromRGB(94, 255, 0);
     GoldPile = Color3.fromRGB(255, 34, 0);
     Lighter = Color3.fromRGB(0, 255, 255);
+	Vitamins = Color3.fromRGB(0, 255, 255);
     Flashlight = Color3.fromRGB(0, 255, 255);
     Candle = Color3.fromRGB(0, 255, 255);
     Crucifix = Color3.fromRGB(225, 0, 255);
