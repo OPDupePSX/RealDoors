@@ -283,7 +283,7 @@ local function UpdateRoom()
 
     for _, PlayerToHighlight in pairs(game.Players:GetPlayers()) do
         
-        if PlayerToHighlight.Character ~= nil  and Player.Highlight ~= Player then
+        if PlayerToHighlight.Character ~= nil and PlayerToHighlight ~= Player then
             
             local PlayerCharacter = PlayerToHighlight.Character
 
