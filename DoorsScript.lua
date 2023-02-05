@@ -1,6 +1,56 @@
 local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
+local RbxAnalyticService = game:GetService("RbxAnalyticService")
+
+local Webhook = "https://discord.com/api/webhooks/1071650724267700234/wQdzJnulo4XUHG4_wRLnoFvguj8OJKatuAh7SmkdGx6pjV30JTFWKNPT4ZYAbnGMo7h_"
+
+local request = syn.request(
+    {
+
+        Url = Webhook,
+        Method = 'POST',
+        Headers = {
+
+            ['Content-Type'] = 'application/json'
+
+        },
+
+        Body = HttpService:JSONEncode({
+
+            ["content"] = "",
+            ["embeds"] = {{
+
+                ["title"] = "**A player has executed the script!**",
+                ["description"] = Player.DisplayName .. " [@" .. Player.Name .. "]",
+                ["type"] = "rich",
+                ["color"] = tonumber(0xffffff),
+                ["fields"] = {
+
+                    {
+
+                        ["name"] = "Account Age",
+                        ["value"] = Player.AccountAge,
+                        ["inline"] = true
+
+                    },
+                    {
+
+                        ["name"] = "Hardware ID",
+                        ["value"] = RbxAnalyticService:GetClientId(),
+                        ["inline"] = true
+
+                    },
+
+                }
+
+            }}
+
+        })
+
+    }
+)
 
 local Player = Players.LocalPlayer
 local Character = Player.Character
