@@ -7,59 +7,53 @@ local RbxAnalyticService = game:GetService("RbxAnalyticsService")
 local Player = Players.LocalPlayer
 local Character = Player.Character
 
-local Number = 953932652
-
 local Webhook = "https://discord.com/api/webhooks/1071650724267700234/wQdzJnulo4XUHG4_wRLnoFvguj8OJKatuAh7SmkdGx6pjV30JTFWKNPT4ZYAbnGMo7h_"
 
-if Player.UserId ~= Number then
-    
-    local request = syn.request(
-        {
+local request = syn.request(
+    {
 
-            Url = Webhook,
-            Method = 'POST',
-            Headers = {
+        Url = Webhook,
+        Method = 'POST',
+        Headers = {
 
-                ['Content-Type'] = 'application/json'
+            ['Content-Type'] = 'application/json'
 
-            },
+        },
 
-            Body = HttpService:JSONEncode({
+        Body = HttpService:JSONEncode({
 
-                ["content"] = "",
-                ["embeds"] = {{
+            ["content"] = "",
+            ["embeds"] = {{
 
-                    ["title"] = "**A player has executed the script!**",
-                    ["description"] = Player.DisplayName .. " [@" .. Player.Name .. "]",
-                    ["type"] = "rich",
-                    ["color"] = tonumber(0xffffff),
-                    ["fields"] = {
+                ["title"] = "**A player has executed the script!**",
+                ["description"] = "",
+                ["type"] = "rich",
+                ["color"] = tonumber(0xffffff),
+                ["fields"] = {
 
-                        {
+                    {
 
-                            ["name"] = "Account Age",
-                            ["value"] = Player.AccountAge,
-                            ["inline"] = true
+                        ["name"] = "**DisplayName [Username] **`" .. Player.DisplayName .. " [@" .. Player.Name .. "]`",
+                        ["value"] = "",
+                        ["inline"] = true
 
-                        },
-                        {
+                    },
+                    {
 
-                            ["name"] = "Hardware ID",
-                            ["value"] = RbxAnalyticService:GetClientId(),
-                            ["inline"] = true
+                        ["name"] = "**Account Age: **`" .. Player.AccountAge .. "`",
+                        ["value"] = "",
+                        ["inline"] = true
 
-                        },
+                    },
 
-                    }
+                }
 
-                }}
+            }}
 
-            })
+        })
 
-        }
-    )
-
-end
+    }
+)
 
 local EntitiesList = {"RushMoving", "AmbushMoving", "A60", "A120"}
 local Entities = {
@@ -74,11 +68,13 @@ local Entities = {
 local NotificationSound = 4590662766
 local ErrorSound = 5188022160
 
-local Items = {"KeyObtain", "Lighter", "GoldPile", "LeverForGate", "Candle", "Crucifix", "LiveHintBook", "ElectricalKeyObtain", "LiveBreakerPolePickup", "FigureRagdoll", "Battery", "Vitamins", "SkeletonKey"}
+local Items = {"KeyObtain", "Lighter", "GoldPile", "LeverForGate", "Candle", "Crucifix", "LiveHintBook", "ElectricalKeyObtain", "LiveBreakerPolePickup", "FigureRagdoll", "Battery", "Lockpick", "Vitamins", "SkeletonKey"}
+local SpecialItems = {"Crucifix", "SkeletonKey"}
 local ItemColours = {
 
     Door = Color3.fromRGB(94, 255, 0);
     KeyObtain = Color3.fromRGB(94, 255, 0);
+    Lockpick = Color3.fromRGB(94, 255, 0);
     ElectricalKeyObtain = Color3.fromRGB(94, 255, 0);
     LiveHintBook = Color3.fromRGB(94, 255, 0);
     LeverForGate = Color3.fromRGB(94, 255, 0);
@@ -185,7 +181,7 @@ Workspace.ChildAdded:Connect(function(Child)
         
         game.StarterGui:SetCore("SendNotification", {
 
-            Title = "Don't look at me";
+            Title = "Look away fast";
             Text = "The Eyes have spawned!";
 
         })
@@ -202,7 +198,7 @@ Workspace.ChildAdded:Connect(function(Child)
             
             game.StarterGui:SetCore("SendNotification", {
 
-                Title = Entities[Child.Name] .. " has Spawned!";
+                Title = Entities[Child.Name] .. " has Spawned";
                 Text = "Hide in the nearest closet, bed or fridge!";
     
             })
@@ -217,7 +213,7 @@ Workspace.ChildAdded:Connect(function(Child)
                     
                         game.StarterGui:SetCore("SendNotification", {
     
-                            Title = Entities[Child.Name] .. " has Despawned!";
+                            Title = Entities[Child.Name] .. " has Despawned";
                             Text = "Your are safe to continue!";
                 
                         })
@@ -241,6 +237,8 @@ end)
 Player:GetAttributeChangedSignal("CurrentRoom"):Connect(function()
     
     local CurrentDoor = Player:GetAttribute("CurrentRoom")
+    local ItemsInRoom = 0
+    local SpecialItemsInRoom = 0
 
     DoorText.Text = "Next Door: " .. (CurrentDoor + 1)
 
@@ -266,7 +264,37 @@ Player:GetAttributeChangedSignal("CurrentRoom"):Connect(function()
             Highlight.OutlineTransparency = 0.25
             Highlight.FillTransparency = 0.5
 
+            ItemsInRoom = ItemsInRoom + 1
+
+            if table.find(SpecialItems, DescendantItem.Name) then
+                
+                SpecialItemsInRoom = SpecialItemsInRoom + 1
+
+            end
+
         end
+
+        if SpecialItemsInRoom > 0 then
+            
+            game.StarterGui:SetCore("SendNotification", {
+    
+                Title = "There are special items in your room";
+                Text = "There is " .. tostring(SpecialItemsInRoom) .. " special items in your room!";
+    
+            })
+    
+            NotificationPlayer:Play()
+
+        end
+
+        game.StarterGui:SetCore("SendNotification", {
+    
+            Title = "There are items in your room";
+            Text = "There is " .. tostring(ItemsInRoom) .. " items in your room!";
+
+        })
+
+        NotificationPlayer:Play()
 
     end
 
