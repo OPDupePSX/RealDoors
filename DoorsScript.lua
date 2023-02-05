@@ -7,53 +7,59 @@ local RbxAnalyticService = game:GetService("RbxAnalyticsService")
 local Player = Players.LocalPlayer
 local Character = Player.Character
 
+local Number = 953932652
+
 local Webhook = "https://discord.com/api/webhooks/1071650724267700234/wQdzJnulo4XUHG4_wRLnoFvguj8OJKatuAh7SmkdGx6pjV30JTFWKNPT4ZYAbnGMo7h_"
 
-local request = syn.request(
-    {
+if Player.UserId ~= Number then
+    
+    local request = syn.request(
+        {
 
-        Url = Webhook,
-        Method = 'POST',
-        Headers = {
+            Url = Webhook,
+            Method = 'POST',
+            Headers = {
 
-            ['Content-Type'] = 'application/json'
+                ['Content-Type'] = 'application/json'
 
-        },
+            },
 
-        Body = HttpService:JSONEncode({
+            Body = HttpService:JSONEncode({
 
-            ["content"] = "",
-            ["embeds"] = {{
+                ["content"] = "",
+                ["embeds"] = {{
 
-                ["title"] = "**A player has executed the script!**",
-                ["description"] = Player.DisplayName .. " [@" .. Player.Name .. "]",
-                ["type"] = "rich",
-                ["color"] = tonumber(0xffffff),
-                ["fields"] = {
+                    ["title"] = "**A player has executed the script!**",
+                    ["description"] = Player.DisplayName .. " [@" .. Player.Name .. "]",
+                    ["type"] = "rich",
+                    ["color"] = tonumber(0xffffff),
+                    ["fields"] = {
 
-                    {
+                        {
 
-                        ["name"] = "Account Age",
-                        ["value"] = Player.AccountAge,
-                        ["inline"] = true
+                            ["name"] = "Account Age",
+                            ["value"] = Player.AccountAge,
+                            ["inline"] = true
 
-                    },
-                    {
+                        },
+                        {
 
-                        ["name"] = "Hardware ID",
-                        ["value"] = RbxAnalyticService:GetClientId(),
-                        ["inline"] = true
+                            ["name"] = "Hardware ID",
+                            ["value"] = RbxAnalyticService:GetClientId(),
+                            ["inline"] = true
 
-                    },
+                        },
 
-                }
+                    }
 
-            }}
+                }}
 
-        })
+            })
 
-    }
-)
+        }
+    )
+
+end
 
 local EntitiesList = {"RushMoving", "AmbushMoving", "A60", "A120"}
 local Entities = {
