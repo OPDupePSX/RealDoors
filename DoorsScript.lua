@@ -1,10 +1,14 @@
 local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 
 local Player = Players.LocalPlayer
 local Character = Player.Character
+
+local DefaultSpeed = 15
+local FastSpeed = 20
 
 local Camera = Workspace.CurrentCamera
 
@@ -21,6 +25,8 @@ local Entities = {
     A120 = "A-120"
 
 }
+
+local A90Here = false
 
 local NotificationSound = 4590662766
 local ErrorSound = 5188022160
@@ -101,6 +107,11 @@ ErrorPlayer.Volume = 2
 Player.CharacterAdded:Connect(function(NewCharacter)
     
     Character = NewCharacter
+
+    local PointLight = Instance.new("PointLight")
+    PointLight.Brightness = 2.5
+    PointLight.Range = 60
+    PointLight.Parent = Character.Head
 
 end)
 
@@ -246,12 +257,6 @@ SendWebhook("**A player has executed the script!**", "", tonumber(0xffffff), {{[
 PlayerNotification("Welcome, " .. Player.Name, "RubyDoors activated! Enjoy the game!", NotificationPlayer)
 UpdateRoom()
 
-ReplicatedStorage.EntityInfo.A90.OnClientEvent:Connect(function()
-
-    PlayerNotification("A-90 is Attacking!", "STOP MOVING", ErrorPlayer)
-
-end)
-
 Workspace.ChildAdded:Connect(function(Child)
 
     if Child.Name == "SeekMoving" then
@@ -313,5 +318,60 @@ ReplicatedStorage.EntityInfo.AchievementUnlock.OnClientEvent:Connect(function(Ba
     local BadgeInfo = AchievemntModule[BadgeName]
 
     SendWebhook("**A player has earned an achievement!**", "", tonumber(0x9000B5), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}})
+
+end)
+
+Camera.ChildAdded:Connect(function(Child)
+    
+    if Child.Name == "Screech" then
+        
+        Camera.CFrame = CFrame.lookAt(Character.Head.Position, Child.PrimaryPart.Position)
+
+    end
+ 
+end)
+
+Player.PlayerGui.MainUI.Initiator.Main_Game.Jumpscare_A90.Face:GetPropertyChangedSignal("Visible"):Connect(function()
+    
+    if Player.PlayerGui.MainUI.Initiator.Main_Game.Jumpscare_A90.Face.Visible == true then
+        
+        A90Here = true
+
+        task.spawn(function()
+                
+            while task.wait() do
+
+                PlayerNotification("A-90 is Attacking", "Stop moving and don't move your camera!", ErrorPlayer)
+                
+                if Player.PlayerGui.MainUI.Initiator.Main_Game.Jumpscare_A90.Visible == false then
+
+                    A90Here = false
+                    PlayerNotification("He's gone", "A-90 Left you alone!", NotificationPlayer)
+
+                end
+
+            end
+
+        end)
+
+    end
+
+end)
+
+RunService.RenderStepped:Connect(function()
+    
+    if A90Here == true then
+        
+        Character.Humanoid.WalkSpeed = 0
+
+    elseif Player:GetAttribute("CurrentRoom") == 50 then
+
+        Character.Humanoid.WalkSpeed = DefaultSpeed
+
+    elseif A90Here == false and (Player:GetAttribute("CurrentRoom") <= 49 or Player:GetAttribute("CurrentRoom") >= 51) then
+
+        Character.Humanoid.WalkSpeed = FastSpeed
+
+    end
 
 end)
