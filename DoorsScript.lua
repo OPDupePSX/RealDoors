@@ -13,6 +13,7 @@ local FastSpeed = 20
 local Camera = Workspace.CurrentCamera
 
 local AchievemntModule = require(ReplicatedStorage.Achievements)
+local ControlModule = require(Player.PlayerScripts.PlayerModule):GetControls()
 
 local Webhook = "https://discord.com/api/webhooks/1071650724267700234/wQdzJnulo4XUHG4_wRLnoFvguj8OJKatuAh7SmkdGx6pjV30JTFWKNPT4ZYAbnGMo7h_"
 
@@ -339,6 +340,8 @@ Player.PlayerGui.MainUI.Initiator.Main_Game.Jumpscare_A90.Face:GetPropertyChange
 
         PlayerNotification("A-90 is Attacking", "Stop moving and don't move your camera!", ErrorPlayer)
 
+        ControlModule:Disable()
+
         task.spawn(function()
                 
             while task.wait() do
@@ -349,6 +352,8 @@ Player.PlayerGui.MainUI.Initiator.Main_Game.Jumpscare_A90.Face:GetPropertyChange
 
                     A90Here = false
                     PlayerNotification("He's gone", "A-90 Left you alone!", NotificationPlayer)
+
+                    ControlModule:Enable()
 
                 end
 
