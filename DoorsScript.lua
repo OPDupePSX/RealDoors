@@ -337,11 +337,13 @@ Player.PlayerGui.MainUI.Initiator.Main_Game.Jumpscare_A90.Face:GetPropertyChange
         
         A90Here = true
 
+        PlayerNotification("A-90 is Attacking", "Stop moving and don't move your camera!", ErrorPlayer)
+
         task.spawn(function()
                 
             while task.wait() do
 
-                PlayerNotification("A-90 is Attacking", "Stop moving and don't move your camera!", ErrorPlayer)
+                ReplicatedStorage.EntityInfo.A90:FireServer(false)
                 
                 if Player.PlayerGui.MainUI.Initiator.Main_Game.Jumpscare_A90.Visible == false then
 
