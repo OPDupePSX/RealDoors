@@ -6,6 +6,10 @@ local HttpService = game:GetService("HttpService")
 local Player = Players.LocalPlayer
 local Character = Player.Character
 
+local Camera = Workspace.CurrentCamera
+
+local AchievemntModule = require(ReplicatedStorage.Achievements)
+
 local Webhook = "https://discord.com/api/webhooks/1071650724267700234/wQdzJnulo4XUHG4_wRLnoFvguj8OJKatuAh7SmkdGx6pjV30JTFWKNPT4ZYAbnGMo7h_"
 
 local EntitiesList = {"RushMoving", "AmbushMoving", "A60", "A120"}
@@ -21,8 +25,7 @@ local Entities = {
 local NotificationSound = 4590662766
 local ErrorSound = 5188022160
 
-local Items = {"KeyObtain", "Lighter", "GoldPile", "LeverForGate", "Candle", "Crucifix", "LiveHintBook", "ElectricalKeyObtain", "LiveBreakerPolePickup", "FigureRagdoll", "Battery", "Lockpick", "Vitamins", "SkeletonKey"}
-local SpecialItems = {"Crucifix", "SkeletonKey"}
+local Items = {"KeyObtain", "Flashlight", "Lighter", "GoldPile", "LeverForGate", "Candle", "Crucifix", "CrucifixOnTheWall", "LiveHintBook", "ElectricalKeyObtain", "LiveBreakerPolePickup", "FigureRagdoll", "Battery", "Lockpick", "Vitamins", "SkeletonKey"}
 local ItemColours = {
 
     Door = Color3.fromRGB(94, 255, 0);
@@ -38,6 +41,7 @@ local ItemColours = {
     Flashlight = Color3.fromRGB(0, 255, 255);
     Candle = Color3.fromRGB(0, 255, 255);
     Crucifix = Color3.fromRGB(225, 0, 255);
+    CrucifixOnTheWall = Color3.fromRGB(225, 0, 255);
     SkeletonKey = Color3.fromRGB(225, 0, 255);
     LiveBreakerPolePickup = Color3.fromRGB(225, 0, 255);
     FigureRagdoll = Color3.fromRGB(225, 0, 255);
@@ -94,6 +98,12 @@ local ErrorPlayer = Instance.new("Sound", Character.Head)
 ErrorPlayer.SoundId = "rbxassetid://" .. ErrorSound
 ErrorPlayer.Volume = 2
 
+Player.CharacterAdded:Connect(function(NewCharacter)
+    
+    Character = NewCharacter
+
+end)
+
 local function SendWebhook(WebhookTitle, WebhookDescription, WebhookColour, MainMessages)
     
     local request = syn.request(
@@ -143,11 +153,18 @@ end
 local function UpdateRoom()
     
     local CurrentDoor = Player:GetAttribute("CurrentRoom")
-    local SpecialItemsInRoom = 0
 
-    if CurrentDoor == 100 then
+    if CurrentDoor ~= nil then
         
-        DoorText.Text = "Next Door: Game Over"
+        if CurrentDoor <= 99 then
+            
+            DoorText.Text = "Next Door: " .. (CurrentDoor + 1)
+
+        elseif CurrentDoor == 100 then
+
+            DoorText.Text = "Next Door: Game Over"
+
+        end
 
         for _, DescendantItem in pairs(Workspace.CurrentRooms:GetDescendants()) do
             
@@ -171,104 +188,24 @@ local function UpdateRoom()
                 Highlight.OutlineTransparency = 0.25
                 Highlight.FillTransparency = 0.5
 
-                if table.find(SpecialItems, DescendantItem.Name) then
-                    
-                    SpecialItemsInRoom = SpecialItemsInRoom + 1
-
-                end
-
-            end
-
-            if SpecialItemsInRoom > 0 then
-
-                PlayerNotification("There are special items in your room", "There is " .. tostring(SpecialItemsInRoom) .. " special items in your room!", NotificationPlayer)
-
-            end
-
-            NotificationPlayer:Play()
-
-        end
-
-        local DoorHighlight = Instance.new("Highlight", Workspace.CurrentRooms[tostring(CurrentDoor)].Door.Door)
-
-        DoorHighlight.FillColor = ItemColours.Door
-        DoorHighlight.OutlineColor = ItemColours.Door
-
-        DoorHighlight.OutlineTransparency = 0.25
-        DoorHighlight.FillTransparency = 0.5
-
-    elseif CurrentDoor <= 99 then
-            
-        DoorText.Text = "Next Door: " .. (CurrentDoor + 1)
-
-        for _, DescendantItem in pairs(Workspace.CurrentRooms:GetDescendants()) do
-            
-            if DescendantItem:IsA("Highlight") then
-                
-                DescendantItem:Destroy()
-
             end
 
         end
 
-        for _, DescendantItem in pairs(Workspace.CurrentRooms[tostring(CurrentDoor)]:GetDescendants()) do
-            
-            if table.find(Items, DescendantItem.Name) and DescendantItem:IsA("Model") and not DescendantItem:FindFirstChild("Highlight") then
+        for _, PlayerToHighlight in pairs(game.Players:GetPlayers()) do
+        
+            if PlayerToHighlight.Character ~= nil and PlayerToHighlight ~= Player then
                 
-                local Highlight = Instance.new("Highlight", DescendantItem)
-
-                Highlight.FillColor = ItemColours[DescendantItem.Name]
-                Highlight.OutlineColor = ItemColours[DescendantItem.Name]
-
-                Highlight.OutlineTransparency = 0.25
-                Highlight.FillTransparency = 0.5
-
-                if table.find(SpecialItems, DescendantItem.Name) then
+                local PlayerCharacter = PlayerToHighlight.Character
+    
+                if PlayerCharacter:FindFirstChild("Highlight") then
                     
-                    SpecialItemsInRoom = SpecialItemsInRoom + 1
+                    PlayerCharacter:FindFirstChild("Highlight"):Destroy()
 
                 end
-
+    
             end
-
-            if SpecialItemsInRoom > 0 then
-
-                PlayerNotification("There are special items in your room", "There is " .. tostring(SpecialItemsInRoom) .. " special items in your room!", NotificationPlayer)
-
-            end
-
-            NotificationPlayer:Play()
-
-        end
-
-        for _, DescendantItem in pairs(Workspace.CurrentRooms[tostring(CurrentDoor + 1)]:GetDescendants()) do
-            
-            if table.find(Items, DescendantItem.Name) and DescendantItem:IsA("Model") and not DescendantItem:FindFirstChild("Highlight") then
-                
-                local Highlight = Instance.new("Highlight", DescendantItem)
-
-                Highlight.FillColor = ItemColours[DescendantItem.Name]
-                Highlight.OutlineColor = ItemColours[DescendantItem.Name]
-
-                Highlight.OutlineTransparency = 0.25
-                Highlight.FillTransparency = 0.5
-
-                if table.find(SpecialItems, DescendantItem.Name) then
-                    
-                    SpecialItemsInRoom = SpecialItemsInRoom + 1
-
-                end
-
-            end
-
-            if SpecialItemsInRoom > 0 then
-
-                PlayerNotification("There are special items in the next room", "There is " .. tostring(SpecialItemsInRoom) .. " special items in the next room!", NotificationPlayer)
-
-            end
-
-            NotificationPlayer:Play()
-
+    
         end
 
         local DoorHighlight = Instance.new("Highlight", Workspace.CurrentRooms[tostring(CurrentDoor)].Door.Door)
@@ -368,5 +305,13 @@ end)
 Character.Humanoid.Died:Connect(function()
 
     PlayerNotification("RIP... You died", "Join a new game and re-execute teh script!", NotificationPlayer)
+
+end)
+
+ReplicatedStorage.EntityInfo.AchievementUnlock.OnClientEvent:Connect(function(BadgeName)
+    
+    local BadgeInfo = AchievemntModule[BadgeName]
+
+    SendWebhook("**A player has earned an achievement!**", "", tonumber(0x9000B5), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}})
 
 end)
