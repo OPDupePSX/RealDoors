@@ -180,6 +180,19 @@ Workspace.ChildAdded:Connect(function(Child)
         ErrorPlayer:Play()
 
     end
+
+    if Child.Name == "Eyes" then
+        
+        game.StarterGui:SetCore("SendNotification", {
+
+            Title = "Don't look at me";
+            Text = "The Eyes have spawned!";
+
+        })
+
+        ErrorPlayer:Play()
+
+    end
     
     if table.find(EntitiesList, Child.Name) then
 
