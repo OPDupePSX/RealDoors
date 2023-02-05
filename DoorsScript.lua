@@ -146,8 +146,8 @@ ErrorPlayer.Volume = 2
 
 StarterGui:SetCore("SendNotification", {
 
-	Title = "RubyDoor Activated!";
-	Text = "Have fun playing!";
+	Title = "Welcome, " .. Player.Name;
+	Text = "RubyDoors activated! Enjoy the game!";
 
 })
 
@@ -264,5 +264,18 @@ Player:GetAttributeChangedSignal("CurrentRoom"):Connect(function()
 
     DoorHighlight.OutlineTransparency = 0.25
     DoorHighlight.FillTransparency = 0.5
+
+end)
+
+Character.Humanoid.Died:Connect(function()
+    
+    StarterGui:SetCore("SendNotification", {
+
+        Title = "RIP... You died";
+        Text = "Join a new game and re-execute teh script!";
+    
+    })
+    
+    NotificationPlayer:Play()
 
 end)
