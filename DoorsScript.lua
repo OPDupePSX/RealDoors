@@ -1,22 +1,24 @@
 local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
-local UserInputService = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Player = Players.LocalPlayer
 local Character = Player.Character
 
-local EntitiesList = {"RushMoving", "AmbushMoving"}
+local EntitiesList = {"RushMoving", "AmbushMoving", "A60", "A120"}
 local Entities = {
 
 	RushMoving = "Rush";
 	AmbushMoving = "Ambush";
+    A60 = "A-60";
+    A120 = "A-120"
 
 }
 
 local NotificationSound = 4590662766
 local ErrorSound = 5188022160
 
-local Items = {"KeyObtain", "Lighter", "GoldPile", "LeverForGate", "Candle", "Crucifix", "LiveHintBook", "ElectricalKeyObtain", "LiveBreakerPolePickup", "FigureRagdoll", "Vitamins"}
+local Items = {"KeyObtain", "Lighter", "GoldPile", "LeverForGate", "Candle", "Crucifix", "LiveHintBook", "ElectricalKeyObtain", "LiveBreakerPolePickup", "FigureRagdoll", "Battery", "Vitamins", "SkeletonKey"}
 local ItemColours = {
 
     Door = Color3.fromRGB(94, 255, 0);
@@ -26,6 +28,7 @@ local ItemColours = {
     LeverForGate = Color3.fromRGB(94, 255, 0);
     GoldPile = Color3.fromRGB(255, 34, 0);
     Lighter = Color3.fromRGB(0, 255, 255);
+    Battery = Color3.fromRGB(0, 255, 255);
 	Vitamins = Color3.fromRGB(0, 255, 255);
     Flashlight = Color3.fromRGB(0, 255, 255);
     Candle = Color3.fromRGB(0, 255, 255);
@@ -93,6 +96,19 @@ StarterGui:SetCore("SendNotification", {
 })
 
 NotificationPlayer:Play()
+
+ReplicatedStorage.EntityInfo.A90.OnClientEvent:Connect(function()
+    
+    game.StarterGui:SetCore("SendNotification", {
+
+        Title = "A-90 is Attacking!";
+        Text = "STOP MOVING";
+
+    })
+
+    ErrorPlayer:Play()
+
+end)
 
 Workspace.ChildAdded:Connect(function(Child)
 
