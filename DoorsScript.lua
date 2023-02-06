@@ -373,7 +373,7 @@ RunService.RenderStepped:Connect(function()
     if A90Here == true then
         
         Character.Humanoid.WalkSpeed = 0
-        Camera.CFrame = CFrame.lookAt(Character.Head.Position, Character.Head.Position + Look)
+        Camera.CFrame = CFrame.lookAt(Character.Head.Position, Character.Head.Position + A90Look)
 
     elseif Player:GetAttribute("CurrentRoom") == 50 then
 
