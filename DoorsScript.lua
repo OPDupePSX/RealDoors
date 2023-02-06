@@ -11,6 +11,7 @@ local DefaultSpeed = 15
 local FastSpeed = 20
 
 local Camera = Workspace.CurrentCamera
+local A90Look = Vector3.new(0, 0, 0)
 
 local AchievemntModule = require(ReplicatedStorage.Achievements)
 local ControlModule = require(Player.PlayerScripts.PlayerModule):GetControls()
@@ -338,6 +339,8 @@ Player.PlayerGui.MainUI.Initiator.Main_Game.Jumpscare_A90.Face:GetPropertyChange
         
         A90Here = true
 
+        A90Look = Workspace.CurrentCamera.CFrame.LookVector
+
         PlayerNotification("A-90 is Attacking", "Stop moving and don't move your camera!", ErrorPlayer)
 
         ControlModule:Disable()
@@ -370,6 +373,7 @@ RunService.RenderStepped:Connect(function()
     if A90Here == true then
         
         Character.Humanoid.WalkSpeed = 0
+        Camera.CFrame = CFrame.lookAt(Character.Head.Position, Character.Head.Position + Look)
 
     elseif Player:GetAttribute("CurrentRoom") == 50 then
 
