@@ -555,6 +555,22 @@ local function UpdateRoom()
     
             end
 
+            for _, PlayerToHighlight in pairs(Players:GetPlayers()) do
+                    
+                if PlayerToHighlight.Character then
+                    
+                    local PlayerCharacter = PlayerToHighlight.Character
+
+                    if PlayerCharacter:FindFirstChild("Highlight") then
+                        
+                        PlayerCharacter:FindFirstChild("Highlight"):Destroy()
+
+                    end
+    
+                end
+    
+            end
+
             if Player.Character ~= nil or Character ~= nil then
             
                 if Character.Head:FindFirstChild("PointLight") then
