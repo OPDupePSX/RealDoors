@@ -333,7 +333,7 @@ Camera.ChildAdded:Connect(function(Child)
  
 end)
 
-Player.PlayerGui.MainUI.Jumpscare_A90.Face:GetPropertyChangedSignal("Visible"):Connect(function()
+Player.PlayerGui.MainUI.Jumpscare.Jumpscare_A90.Face:GetPropertyChangedSignal("Visible"):Connect(function()
     
     if Player.PlayerGui.MainUI.Jumpscare_A90.Face.Visible == true then
         
@@ -351,7 +351,7 @@ Player.PlayerGui.MainUI.Jumpscare_A90.Face:GetPropertyChangedSignal("Visible"):C
 
                 ReplicatedStorage.EntityInfo.A90:FireServer(false)
                 
-                if Player.PlayerGui.MainUI.Initiator.Main_Game.Jumpscare_A90.Visible == false then
+                if Player.PlayerGui.MainUI.Jumpscare.Jumpscare_A90.Visible == false then
 
                     A90Here = false
                     PlayerNotification("He's gone", "A-90 Left you alone!", NotificationPlayer)
