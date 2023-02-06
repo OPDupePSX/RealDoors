@@ -333,9 +333,9 @@ Camera.ChildAdded:Connect(function(Child)
  
 end)
 
-Player.PlayerGui.MainUI.Initiator.Main_Game.Jumpscare_A90.Face:GetPropertyChangedSignal("Visible"):Connect(function()
+Player.PlayerGui.MainUI.Jumpscare_A90.Face:GetPropertyChangedSignal("Visible"):Connect(function()
     
-    if Player.PlayerGui.MainUI.Initiator.Main_Game.Jumpscare_A90.Face.Visible == true then
+    if Player.PlayerGui.MainUI.Jumpscare_A90.Face.Visible == true then
         
         A90Here = true
 
@@ -379,7 +379,7 @@ RunService.RenderStepped:Connect(function()
 
         Character.Humanoid.WalkSpeed = DefaultSpeed
 
-    elseif A90Here == false then
+    elseif A90Here == false and (Player:GetAttribute("CurrentRoom") <= 49 or Player:GetAttribute("CurrentRoom") >= 51) then
 
         Character.Humanoid.WalkSpeed = FastSpeed
 
