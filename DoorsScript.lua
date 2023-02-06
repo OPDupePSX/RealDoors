@@ -535,7 +535,7 @@ end)
 
 RunService.RenderStepped:Connect(function()
 
-    for _, DescendantItem in pairs(game:GetDescendants()) then
+    for _, DescendantItem in pairs(game:GetDescendants()) do
         
         if DescendantItem:IsA("Sound") then
             
