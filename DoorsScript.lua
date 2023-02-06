@@ -273,6 +273,21 @@ local function UpdateRoom()
 
         end
 
+        for _, DescendantItem in pairs(game:GetDescendants()) do
+        
+            if DescendantItem:IsA("Sound") then
+                
+                if string.find("ThunderStrike", DescendantItem.Name) or (DescendantItem.Name == "PlaySound" and (DescendantItem.Parent.Name == "Glass" or DescendantItem.Parent.Name == "Wall" or DescendantItem.Parent.Name == "Particles")) then
+                    
+                    DescendantItem.Volume = 0
+                    DescendantItem.Playing = false
+    
+                end
+    
+            end
+    
+        end
+
         for _, DescendantItem in pairs(Workspace.CurrentRooms[tostring(CurrentDoor)]:GetDescendants()) do
             
             if table.find(Items, DescendantItem.Name) and DescendantItem:IsA("Model") and not DescendantItem:FindFirstChild("Highlight") then
@@ -534,21 +549,6 @@ task.spawn(function()
 end)
 
 RunService.RenderStepped:Connect(function()
-
-    for _, DescendantItem in pairs(game:GetDescendants()) do
-        
-        if DescendantItem:IsA("Sound") then
-            
-            if string.find("ThunderStrike", DescendantItem.Name) or (DescendantItem.Name == "PlaySound" and (DescendantItem.Parent.Name == "Glass" or DescendantItem.Parent.Name == "Wall" or DescendantItem.Parent.Name == "Particles")) then
-                
-                DescendantItem.Volume = 0
-                DescendantItem.Playing = false
-
-            end
-
-        end
-
-    end
     
     if Character.Humanoid then
 
