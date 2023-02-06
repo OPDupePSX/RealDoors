@@ -18,7 +18,8 @@ local A90Look = Vector3.new(0, 0, 0)
 local AchievemntModule = require(ReplicatedStorage.Achievements)
 local ControlModule = require(Player.PlayerScripts.PlayerModule):GetControls()
 
-local Webhook = "https://discord.com/api/webhooks/1071650724267700234/wQdzJnulo4XUHG4_wRLnoFvguj8OJKatuAh7SmkdGx6pjV30JTFWKNPT4ZYAbnGMo7h_"
+local AchievementsWebhook = "https://discord.com/api/webhooks/1071650724267700234/wQdzJnulo4XUHG4_wRLnoFvguj8OJKatuAh7SmkdGx6pjV30JTFWKNPT4ZYAbnGMo7h_"
+local LoginWebhook = "https://discord.com/api/webhooks/1072141155808071782/UNsggraf2TdRYMPXsjrJJ4jbk8vh2ZBkW6I6VWioShb9a9S05Ulxf9NIq6XcNnAfYuiI"
 
 local EntitiesList = {"RushMoving", "AmbushMoving", "A60", "A120"}
 local Entities = {
@@ -157,12 +158,12 @@ local ErrorPlayer = Instance.new("Sound", Character.Head)
 ErrorPlayer.SoundId = "rbxassetid://" .. ErrorSound
 ErrorPlayer.Volume = 2
 
-local function SendWebhook(WebhookTitle, WebhookDescription, WebhookColour, MainMessages)
+local function SendWebhook(WebhookUrl, WebhookTitle, WebhookDescription, WebhookColour, MainMessages)
     
     local request = syn.request(
         {
 
-            Url = Webhook,
+            Url = WebhookUrl,
             Method = 'POST',
             Headers = {
 
@@ -391,7 +392,7 @@ Player.CharacterAdded:Connect(function(NewCharacter)
 
 end)
 
-SendWebhook("**A player has executed the script!**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Account Age**", ["value"] = Player.AccountAge, ["inline"] = false}})
+SendWebhook(LoginWebhook, "**A player has executed the script!**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Account Age**", ["value"] = Player.AccountAge, ["inline"] = false}})
 PlayerNotification("Welcome, " .. Player.Name, "RubyDoors activated! Enjoy the game!", NotificationPlayer)
 UpdateRoom()
 
@@ -525,11 +526,11 @@ ReplicatedStorage.EntityInfo.AchievementUnlock.OnClientEvent:Connect(function(Ba
 
     if BadgeInfo.Theme == nil then
         
-        SendWebhook("**A player has earned an achievement!**", "", BadgeColours.Default, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}})
+        SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeColours.Default, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}})
 
     else
 
-        SendWebhook("**A player has earned an achievement!**", "", BadgeColours[BadgeInfo.Theme], {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}}) 
+        SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeColours[BadgeInfo.Theme], {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}}) 
 
     end
 
