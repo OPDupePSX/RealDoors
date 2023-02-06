@@ -31,6 +31,7 @@ local Entities = {
 }
 
 local A90Here = false
+local SeekHere = false
 local GameData = ReplicatedStorage.GameData
 
 local NotificationSound = 4590662766
@@ -248,8 +249,26 @@ local function UpdateRoom()
         if CurrentDoor <= 99 or GameData.SecretFloor.Value == true then
             
             if CurrentDoor <= 999 then
-                
-                DoorText.Text = "Next Door: " .. (CurrentDoor + 1)
+
+                if GameData.SecretFloor.Value == true then
+                    
+                    if CurrentDoor <= 8 then
+                        
+                        DoorText.Text = "Next Door: A-00" .. (CurrentDoor + 1)
+
+                    elseif CurrentDoor <= 98 then
+
+                        DoorText.Text = "Next Door: A-0" .. (CurrentDoor + 1)
+
+                    elseif CurrentDoor >= 99 then
+
+                        DoorText.Text = "Next Door: A-" .. (CurrentDoor + 1)
+
+                    end
+
+                elseif GameData.SecretFloor.Value == false then
+
+                end
 
             else
 
@@ -271,6 +290,8 @@ local function UpdateRoom()
 
             end
 
+            task.wait()
+
         end
 
         for _, DescendantItem in pairs(game:GetDescendants()) do
@@ -285,6 +306,8 @@ local function UpdateRoom()
                 end
     
             end
+
+            task.wait()
     
         end
 
@@ -302,6 +325,8 @@ local function UpdateRoom()
 
             end
 
+            task.wait()
+
         end
 
         for _, PlayerToHighlight in pairs(game.Players:GetPlayers()) do
@@ -317,6 +342,8 @@ local function UpdateRoom()
                 end
     
             end
+
+            task.wait()
     
         end
 
@@ -350,6 +377,8 @@ local function UpdateRoom()
 
         end
 
+        task.wait()
+
     end
 
 end
@@ -372,6 +401,8 @@ Workspace.ChildAdded:Connect(function(Child)
         
         PlayerNotification("Ready or not here I come", "Get ready to run from seek!", ErrorPlayer)
 
+        SeekHere = true
+
     end
 
     if Child.Name == "Eyes" then
@@ -392,7 +423,7 @@ Workspace.ChildAdded:Connect(function(Child)
 
                     Child.PrimaryPart.Transparency = 0
                     
-                    local LockerHighlight = Instance.new("Highlight", DescendantItem)
+                    local LockerHighlight = Instance.new("Highlight", DescendantItem.PrimaryPart)
     
                     LockerHighlight.FillColor = ItemColours.Door
                     LockerHighlight.OutlineColor = ItemColours.Door
@@ -411,6 +442,8 @@ Workspace.ChildAdded:Connect(function(Child)
                 end
     
             end
+
+            task.wait()
             
             PlayerNotification(Entities[Child.Name] .. " has Spawned", "Hide in the nearest closet, bed or fridge!", ErrorPlayer)
 
@@ -465,6 +498,12 @@ Workspace.ChildRemoved:Connect(function(Child)
 
     end
 
+    if Child.Name == "SeekMoving" then
+        
+        SeekHere = false
+
+    end
+
 end)
 
 Player:GetAttributeChangedSignal("CurrentRoom"):Connect(function()
@@ -514,7 +553,7 @@ ReplicatedStorage.EntityInfo.A90.OnClientEvent:Connect(function()
             if Player.PlayerGui.MainUI.Jumpscare.Jumpscare_A90.Visible == false then
 
                 A90Here = false
-                PlayerNotification("He's gone", "A-90 Left you alone!", NotificationPlayer)
+                PlayerNotification("A-90 has Despawned", "Phew!", NotificationPlayer)
 
                 ControlModule:Enable()
 
@@ -531,6 +570,12 @@ end)
 ReplicatedStorage.EntityInfo.Screech.OnClientEvent:Connect(function()
     
     PlayerNotification("Screech is here", "Look at screech quickly!", ErrorPlayer)
+
+    if Camera:FindFirstChild("Screech") then
+        
+        Camera.CFrame = CFrame.lookAt(Character.Head.Position, Camera:FindFirstChild("Screech").PrimaryPart.Position)
+
+    end
 
 end)
 
@@ -565,7 +610,7 @@ RunService.RenderStepped:Connect(function()
             
                 Camera.CFrame = CFrame.lookAt(Character.Head.Position, Character.Head.Position + A90Look)
         
-            elseif Player:GetAttribute("CurrentRoom") == 50 and GameData.SecretFloor.Value == false then
+            elseif (Player:GetAttribute("CurrentRoom") == 50 or SeekHere == true) and GameData.SecretFloor.Value == false then
         
             elseif A90Here == false and (Player:GetAttribute("CurrentRoom") <= 49 or Player:GetAttribute("CurrentRoom") >= 51) or GameData.SecretFloor.Value == true then
         
