@@ -534,6 +534,16 @@ task.spawn(function()
 end)
 
 RunService.RenderStepped:Connect(function()
+
+    for _, DescendantItem in pairs(game:GetDescendants()) then
+        
+        if DescendantItem:IsA("Sound") then
+            
+            if string.find("ThunderStrike", DescendantItem.Name) or (DescendantItem.Name == "PlaySound" and DescendantItem.Parent.Name == "Glass")
+
+        end
+
+    end
     
     if Character.Humanoid then
 
