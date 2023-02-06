@@ -292,6 +292,22 @@ Workspace.ChildAdded:Connect(function(Child)
         task.wait(0.25)
 
         if Child.Name == "A60" or Child.Name == "A120" then
+
+            for _, DescendantItem in pairs(Workspace.CurrentRooms[tostring(CurrentDoor)]:GetDescendants()) do
+            
+                if DescendantItem.Name == "Rooms_Locker" then
+                    
+                    local Highlight = Instance.new("Highlight", DescendantItem)
+    
+                    Highlight.FillColor = ItemColours.Door
+                    Highlight.OutlineColor = ItemColours.Door
+    
+                    Highlight.OutlineTransparency = 0.25
+                    Highlight.FillTransparency = 0.5
+    
+                end
+    
+            end
             
             PlayerNotification(Entities[Child.Name] .. " has Spawned", "Hide in the nearest closet, bed or fridge!", ErrorPlayer)
 
@@ -328,6 +344,7 @@ Workspace.ChildRemoved:Connect(function(Child)
     if Child.Name == "A60" or Child.Name == "A120" then
         
         PlayerNotification(Entities[Child.Name] .. " has Despawned", "Your are safe to continue!", NotificationPlayer)
+        UpdateRoom()
 
     end
 
