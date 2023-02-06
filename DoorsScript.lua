@@ -456,7 +456,7 @@ end)
 
 Character.Humanoid.Died:Connect(function()
 
-    PlayerNotification("RIP... You died", "Join a new game and re-execute teh script!", NotificationPlayer)
+    PlayerNotification("RIP... You died", "Join a new game and re-execute the script!", NotificationPlayer)
 
 end)
 
@@ -506,6 +506,12 @@ ReplicatedStorage.EntityInfo.A90.OnClientEvent:Connect(function()
         end
 
     end)
+
+end)
+
+ReplicatedStorage.EntityInfo.Screech.OnClientEvent:Connect(function()
+    
+    PlayerNotification("Screech is here", "Look at screech quickly!", ErrorPlayer)
 
 end)
 
