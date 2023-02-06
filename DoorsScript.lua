@@ -269,6 +269,20 @@ local function UpdateRoom()
 
                 elseif GameData.SecretFloor.Value == false then
 
+                    if CurrentDoor <= 8 then
+                        
+                        DoorText.Text = "Next Door: 00" .. (CurrentDoor + 1)
+
+                    elseif CurrentDoor <= 98 then
+
+                        DoorText.Text = "Next Door: 0" .. (CurrentDoor + 1)
+
+                    elseif CurrentDoor >= 99 then
+
+                        DoorText.Text = "Next Door: " .. (CurrentDoor + 1)
+
+                    end
+
                 end
 
             else
@@ -291,8 +305,6 @@ local function UpdateRoom()
 
             end
 
-            task.wait()
-
         end
 
         for _, DescendantItem in pairs(game:GetDescendants()) do
@@ -305,10 +317,15 @@ local function UpdateRoom()
                     DescendantItem.Playing = false
     
                 end
+
+                if DescendantItem.Parent.Parent.Name == "Footsteps" or DescendantItem.Parent.Parent.Name == "FootstepsClient" or (DescendantItem.Name == "Open" and DescendantItem.Parent.Name == "Door") then
+                    
+                    DescendantItem.Volume = 0
+                    DescendantItem.Playing = false
+
+                end
     
             end
-
-            task.wait()
     
         end
 
@@ -326,8 +343,6 @@ local function UpdateRoom()
 
             end
 
-            task.wait()
-
         end
 
         for _, PlayerToHighlight in pairs(game.Players:GetPlayers()) do
@@ -343,8 +358,6 @@ local function UpdateRoom()
                 end
     
             end
-
-            task.wait()
     
         end
 
@@ -377,8 +390,6 @@ local function UpdateRoom()
             end
 
         end
-
-        task.wait()
 
     end
 
@@ -443,8 +454,6 @@ Workspace.ChildAdded:Connect(function(Child)
                 end
     
             end
-
-            task.wait()
             
             PlayerNotification(Entities[Child.Name] .. " has Spawned", "Hide in the nearest closet, bed or fridge!", ErrorPlayer)
 
