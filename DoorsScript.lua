@@ -547,8 +547,6 @@ RunService.RenderStepped:Connect(function()
         
             elseif Player:GetAttribute("CurrentRoom") == 50 and GameData.SecretFloor.Value == false then
         
-                Character.Humanoid.WalkSpeed = DefaultSpeed
-        
             elseif A90Here == false and (Player:GetAttribute("CurrentRoom") <= 49 or Player:GetAttribute("CurrentRoom") >= 51) or GameData.SecretFloor.Value == true then
         
                 Character.Humanoid.WalkSpeed = FastSpeed
