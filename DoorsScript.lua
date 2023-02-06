@@ -10,6 +10,8 @@ local Character = Player.Character
 local DefaultSpeed = 15
 local FastSpeed = 20
 
+local TotalTime = 0
+
 local Camera = Workspace.CurrentCamera
 local A90Look = Vector3.new(0, 0, 0)
 
@@ -71,41 +73,75 @@ local BadgeColours = {
 
 }
 
-local NextDoorGui = Instance.new("ScreenGui")
-local Bar = Instance.new("Frame")
-local DoorText = Instance.new("TextLabel")
+local RubyDoorsGui = Instance.new("ScreenGui")
+local Background = Instance.new("Frame")
 local UICorner = Instance.new("UICorner")
+local TimerText = Instance.new("TextLabel")
+local DoorText = Instance.new("TextLabel")
+local CurrentSpeedText = Instance.new("TextLabel")
 
-NextDoorGui.Name = "NextDoorGui"
-NextDoorGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-NextDoorGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+--Properties:
 
-Bar.Name = "Bar"
-Bar.Parent = NextDoorGui
-Bar.AnchorPoint = Vector2.new(0.5, 0)
-Bar.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Bar.BackgroundTransparency = 0.500
-Bar.BorderSizePixel = 0
-Bar.Position = UDim2.new(0.5, 0, 0.0149999978, 0)
-Bar.Size = UDim2.new(0.449999988, 0, 0.0636135563, 0)
+RubyDoorsGui.Name = "RubyDoorsGui"
+RubyDoorsGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+RubyDoorsGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Background.Name = "Background"
+Background.Parent = RubyDoorsGui
+Background.AnchorPoint = Vector2.new(0.5, 0)
+Background.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Background.BackgroundTransparency = 0.500
+Background.BorderSizePixel = 0
+Background.Position = UDim2.new(0.5, 0, 0.0149999829, 0)
+Background.Size = UDim2.new(0.75, 0, 0.0823400244, 0)
+
+UICorner.CornerRadius = UDim.new(0.25, 0)
+UICorner.Parent = Background
+
+TimerText.Name = "TimerText"
+TimerText.Parent = Background
+TimerText.AnchorPoint = Vector2.new(0.5, 0)
+TimerText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TimerText.BackgroundTransparency = 1.000
+TimerText.BorderSizePixel = 0
+TimerText.Position = UDim2.new(0.5, 0, 0, 0)
+TimerText.Size = UDim2.new(0.25, 0, 1, 0)
+TimerText.Font = Enum.Font.DenkOne
+TimerText.Text = "00:00:00"
+TimerText.TextColor3 = Color3.fromRGB(255, 255, 255)
+TimerText.TextScaled = true
+TimerText.TextSize = 14.000
+TimerText.TextWrapped = true
 
 DoorText.Name = "DoorText"
-DoorText.Parent = Bar
-DoorText.AnchorPoint = Vector2.new(0.5, 0.5)
+DoorText.Parent = Background
+DoorText.AnchorPoint = Vector2.new(0, 1)
 DoorText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 DoorText.BackgroundTransparency = 1.000
 DoorText.BorderSizePixel = 0
-DoorText.Position = UDim2.new(0.5, 0, 0.5, 0)
-DoorText.Size = UDim2.new(1, 0, 1, 0)
-DoorText.Font = Enum.Font.GothamBold
+DoorText.Position = UDim2.new(0, 0, 1, 0)
+DoorText.Size = UDim2.new(0.375, 0, 0.698095262, 0)
+DoorText.Font = Enum.Font.DenkOne
 DoorText.Text = "Next Door: 1"
 DoorText.TextColor3 = Color3.fromRGB(255, 255, 255)
 DoorText.TextScaled = true
 DoorText.TextSize = 14.000
 DoorText.TextWrapped = true
 
-UICorner.CornerRadius = UDim.new(0.25, 0)
-UICorner.Parent = Bar
+CurrentSpeedText.Name = "CurrentSpeedText"
+CurrentSpeedText.Parent = Background
+CurrentSpeedText.AnchorPoint = Vector2.new(1, 1)
+CurrentSpeedText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+CurrentSpeedText.BackgroundTransparency = 1.000
+CurrentSpeedText.BorderSizePixel = 0
+CurrentSpeedText.Position = UDim2.new(1, 0, 1, 0)
+CurrentSpeedText.Size = UDim2.new(0.375, 0, 0.698095262, 0)
+CurrentSpeedText.Font = Enum.Font.DenkOne
+CurrentSpeedText.Text = "Current Speed: 20"
+CurrentSpeedText.TextColor3 = Color3.fromRGB(255, 255, 255)
+CurrentSpeedText.TextScaled = true
+CurrentSpeedText.TextSize = 14.000
+CurrentSpeedText.TextWrapped = true
 
 local PointLight = Instance.new("PointLight")
 PointLight.Brightness = 2.5
@@ -166,15 +202,60 @@ local function PlayerNotification(MessageTitle, MessageText, SoundToPlay)
 
 end
 
+local function Format(Int)
+	return string.format("%02i", Int)
+end
+
+local function convertToHMS(Seconds)
+	local Minutes = (Seconds - Seconds%60)/60
+	Seconds = Seconds - Minutes*60
+	local Hours = (Minutes - Minutes%60)/60
+	Minutes = Minutes - Hours*60
+
+    if Hours == 0 and Minutes == 0 then
+        
+        return Format(Seconds)
+
+    elseif Hours >= 1 and Seconds >= 0 and Minutes >= 0 then
+
+        return Format(Hours)..":"..Format(Minutes)..":"..Format(Seconds)
+
+    elseif Hours >= 1 and Seconds >= 0 and Minutes >= 1 then
+
+        return Format(Hours)..":"..Format(Minutes)..":"..Format(Seconds)
+
+    elseif Seconds >= 0 and Minutes >= 1 then
+
+        return Format(Minutes)..":"..Format(Seconds)
+
+    end
+
+	return Format(Hours)..":"..Format(Minutes)..":"..Format(Seconds)
+end
+
 local function UpdateRoom()
-    
+
+    if Character.Humanoid then
+        
+        CurrentSpeedText.Text = "Current Speed: " .. Character.Humanoid.WalkSpeed
+
+    end
+
     local CurrentDoor = Player:GetAttribute("CurrentRoom")
 
     if CurrentDoor ~= nil then
         
         if CurrentDoor <= 99 or GameData.SecretFloor.Value == true then
             
-            DoorText.Text = "Next Door: " .. (CurrentDoor + 1)
+            if CurrentDoor <= 999 then
+                
+                DoorText.Text = "Next Door: " .. (CurrentDoor + 1)
+
+            else
+
+                DoorText.Text = "Congrats on finishing A-1000"
+
+            end
 
         elseif CurrentDoor == 100 and GameData.SecretFloor.Value == false then
 
@@ -293,6 +374,8 @@ Workspace.ChildAdded:Connect(function(Child)
             for _, DescendantItem in pairs(Workspace.CurrentRooms:GetDescendants()) do
             
                 if DescendantItem.Name == "Rooms_Locker" then
+
+                    Child.PrimaryPart.Transparency = 0
                     
                     local LockerHighlight = Instance.new("Highlight", DescendantItem)
     
@@ -320,15 +403,17 @@ Workspace.ChildAdded:Connect(function(Child)
         
         if Child.PrimaryPart:FindFirstChild("PlaySound").Playing == true and Child.Name ~= "A60" and Child.Name ~= "A120" then
 
+            Child.PrimaryPart.Transparency = 0
+
             PlayerNotification(Entities[Child.Name] .. " has Spawned", "Hide in the nearest closet, bed or fridge!", ErrorPlayer)
 
             local EntityHighlight = Instance.new("Highlight", Child)
     
-                EntityHighlight.FillColor = ItemColours.FigureRagdoll
-                EntityHighlight.OutlineColor = ItemColours.FigureRagdoll
+            EntityHighlight.FillColor = ItemColours.FigureRagdoll
+            EntityHighlight.OutlineColor = ItemColours.FigureRagdoll
     
-                EntityHighlight.OutlineTransparency = 0.25
-                EntityHighlight.FillTransparency = 0.5
+            EntityHighlight.OutlineTransparency = 0.25
+            EntityHighlight.FillTransparency = 0.5
 
             task.spawn(function()
                 
@@ -424,31 +509,47 @@ ReplicatedStorage.EntityInfo.A90.OnClientEvent:Connect(function()
 
 end)
 
-RunService.RenderStepped:Connect(function()
+task.spawn(function()
     
-    if A90Here == true then
+    while task.wait(1) do
         
-        Character.Humanoid.WalkSpeed = 0
-        Camera.CFrame = CFrame.lookAt(Character.Head.Position, Character.Head.Position + A90Look)
+        if Character.Humanoid then
+            
+            TotalTime = TotalTime + 1
 
-    elseif Player:GetAttribute("CurrentRoom") == 50 and GameData.SecretFloor.Value == false then
-
-        Character.Humanoid.WalkSpeed = DefaultSpeed
-
-    elseif A90Here == false and (Player:GetAttribute("CurrentRoom") <= 49 or Player:GetAttribute("CurrentRoom") >= 51) or GameData.SecretFloor.Value == true then
-
-        Character.Humanoid.WalkSpeed = FastSpeed
+        end
 
     end
 
-    if Character then
+end)
+
+RunService.RenderStepped:Connect(function()
+    
+    if Character.Humanoid then
+
+        TimerText.Text = convertToHMS(TotalTime)
         
+        if A90Here == true then
+        
+            Character.Humanoid.WalkSpeed = 0
+            Camera.CFrame = CFrame.lookAt(Character.Head.Position, Character.Head.Position + A90Look)
+    
+        elseif Player:GetAttribute("CurrentRoom") == 50 and GameData.SecretFloor.Value == false then
+    
+            Character.Humanoid.WalkSpeed = DefaultSpeed
+    
+        elseif A90Here == false and (Player:GetAttribute("CurrentRoom") <= 49 or Player:GetAttribute("CurrentRoom") >= 51) or GameData.SecretFloor.Value == true then
+    
+            Character.Humanoid.WalkSpeed = FastSpeed
+    
+        end
+    
         if not Character.Head:FindFirstChild("PointLight") then
-            
+                
             local PointLight = Instance.new("PointLight", NewCharacter.Head)
             PointLight.Brightness = 2.5
             PointLight.Range = 60
-
+    
         end
 
     end
