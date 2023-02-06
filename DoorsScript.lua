@@ -309,6 +309,16 @@ Workspace.ChildAdded:Connect(function(Child)
 
 end)
 
+Workspace.ChildRemoved:Connect(function(Child)
+    
+    if Child.Name == "A60" or Child.Name == "A120" then
+        
+        PlayerNotification(Entities[Child.Name] .. " has Despawned", "Your are safe to continue!", NotificationPlayer)
+
+    end
+
+end)
+
 Player:GetAttributeChangedSignal("CurrentRoom"):Connect(function()
     
     UpdateRoom()
