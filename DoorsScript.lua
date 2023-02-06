@@ -29,6 +29,7 @@ local Entities = {
 }
 
 local A90Here = false
+local GameData = ReplicatedStorage.GameData
 
 local NotificationSound = 4590662766
 local ErrorSound = 5188022160
@@ -182,11 +183,11 @@ local function UpdateRoom()
 
     if CurrentDoor ~= nil then
         
-        if CurrentDoor <= 99 then
+        if CurrentDoor <= 99 or GameData.SecretFloor.Value == true then
             
             DoorText.Text = "Next Door: " .. (CurrentDoor + 1)
 
-        elseif CurrentDoor == 100 then
+        elseif CurrentDoor == 100 and GameData.SecretFloor.Value == false then
 
             DoorText.Text = "Next Door: Game Over"
 
@@ -361,16 +362,6 @@ ReplicatedStorage.EntityInfo.AchievementUnlock.OnClientEvent:Connect(function(Ba
 
 end)
 
-Camera.ChildAdded:Connect(function(Child)
-    
-    if Child.Name == "Screech" then
-        
-        Camera.CFrame = CFrame.lookAt(Character.Head.Position, Child.PrimaryPart.Position)
-
-    end
- 
-end)
-
 Player.PlayerGui.MainUI.Jumpscare.Jumpscare_A90.Face:GetPropertyChangedSignal("Visible"):Connect(function()
     
     if Player.PlayerGui.MainUI.Jumpscare_A90.Face.Visible == true then
@@ -413,11 +404,11 @@ RunService.RenderStepped:Connect(function()
         Character.Humanoid.WalkSpeed = 0
         Camera.CFrame = CFrame.lookAt(Character.Head.Position, Character.Head.Position + A90Look)
 
-    elseif Player:GetAttribute("CurrentRoom") == 50 then
+    elseif Player:GetAttribute("CurrentRoom") == 50 and GameData.SecretFloor.Value == false then
 
         Character.Humanoid.WalkSpeed = DefaultSpeed
 
-    elseif A90Here == false and (Player:GetAttribute("CurrentRoom") <= 49 or Player:GetAttribute("CurrentRoom") >= 51) then
+    elseif A90Here == false and (Player:GetAttribute("CurrentRoom") <= 49 or Player:GetAttribute("CurrentRoom") >= 51) or GameData.SecretFloor.Value == true then
 
         Character.Humanoid.WalkSpeed = FastSpeed
 
