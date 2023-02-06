@@ -539,9 +539,10 @@ RunService.RenderStepped:Connect(function()
         
         if DescendantItem:IsA("Sound") then
             
-            if string.find("ThunderStrike", DescendantItem.Name) or (DescendantItem.Name == "PlaySound" and DescendantItem.Parent.Name == "Glass") then
+            if string.find("ThunderStrike", DescendantItem.Name) or (DescendantItem.Name == "PlaySound" and (DescendantItem.Parent.Name == "Glass" or DescendantItem.Parent.Name == "Wall" or DescendantItem.Parent.Name == "Particles")) then
                 
                 DescendantItem.Volume = 0
+                DescendantItem.Playing = false
 
             end
 
