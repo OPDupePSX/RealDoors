@@ -127,7 +127,7 @@ Player.CharacterAdded:Connect(function(NewCharacter)
     local PointLight = Instance.new("PointLight")
     PointLight.Brightness = 2.5
     PointLight.Range = 60
-    PointLight.Parent = Character.Head
+    PointLight.Parent = NewCharacter.Head
 
 end)
 
@@ -379,38 +379,33 @@ ReplicatedStorage.EntityInfo.AchievementUnlock.OnClientEvent:Connect(function(Ba
 
 end)
 
-Player.PlayerGui.MainUI.Jumpscare.Jumpscare_A90.Face:GetPropertyChangedSignal("Visible"):Connect(function()
+ReplicatedStorage.EntityInfo.A90.OnClientEvent:Connect(function()
     
-    if Player.PlayerGui.MainUI.Jumpscare_A90.Face.Visible == true then
-        
-        A90Here = true
+    A90Here = true
+    A90Look = Workspace.CurrentCamera.CFrame.LookVector
 
-        A90Look = Workspace.CurrentCamera.CFrame.LookVector
+    PlayerNotification("A-90 is Attacking", "Stop moving and don't move your camera!", ErrorPlayer)
 
-        PlayerNotification("A-90 is Attacking", "Stop moving and don't move your camera!", ErrorPlayer)
+    ControlModule:Disable()
 
-        ControlModule:Disable()
-
-        task.spawn(function()
+    task.spawn(function()
                 
-            while task.wait() do
+        while task.wait() do
 
-                ReplicatedStorage.EntityInfo.A90:FireServer(false)
+            ReplicatedStorage.EntityInfo.A90:FireServer(false)
                 
-                if Player.PlayerGui.MainUI.Jumpscare.Jumpscare_A90.Visible == false then
+            if Player.PlayerGui.MainUI.Jumpscare.Jumpscare_A90.Visible == false then
 
-                    A90Here = false
-                    PlayerNotification("He's gone", "A-90 Left you alone!", NotificationPlayer)
+                A90Here = false
+                PlayerNotification("He's gone", "A-90 Left you alone!", NotificationPlayer)
 
-                    ControlModule:Enable()
-
-                end
+                ControlModule:Enable()
 
             end
 
-        end)
+        end
 
-    end
+    end)
 
 end)
 
