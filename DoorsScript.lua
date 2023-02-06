@@ -283,7 +283,7 @@ Workspace.ChildAdded:Connect(function(Child)
 
         end
         
-        if Child.PrimaryPart:FindFirstChild("PlaySound").Playing == true then
+        if Child.PrimaryPart:FindFirstChild("PlaySound").Playing == true and Child.Name ~= "A60" and Child.Name ~= "A120" then
 
             PlayerNotification(Entities[Child.Name] .. " has Spawned", "Hide in the nearest closet, bed or fridge!", ErrorPlayer)
 
