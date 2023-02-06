@@ -57,6 +57,19 @@ local ItemColours = {
 
 }
 
+local BadgeColours = {
+
+    Default = tonumber(0xDEDEDE);
+    GroupMember = tonumber(0xDEDEDE);
+    Unique = tonumber(0xFFE781);
+    Survive = tonumber(0x81FFFF);
+    SurviveRare = tonumber(0x81FFA3);
+    RareEncounter = tonumber(0x818EFF);
+    EscapeUnique = tonumber(0xD681FF);
+    EscapeInsane = tonumber(0x9010FF);
+
+}
+
 local NextDoorGui = Instance.new("ScreenGui")
 local Bar = Instance.new("Frame")
 local DoorText = Instance.new("TextLabel")
@@ -334,8 +347,17 @@ end)
 ReplicatedStorage.EntityInfo.AchievementUnlock.OnClientEvent:Connect(function(BadgeName)
     
     local BadgeInfo = AchievemntModule[BadgeName]
+    local BadgeColour = tonumber(0x9000B5)
 
-    SendWebhook("**A player has earned an achievement!**", "", tonumber(0x9000B5), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}})
+    if BadgeInfo.Theme == nil then
+        
+        SendWebhook("**A player has earned an achievement!**", "", BadgeColours.Default, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}})
+
+    else
+
+        SendWebhook("**A player has earned an achievement!**", "", BadgeColours[BadgeInfo.Theme], {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}}) 
+
+    end
 
 end)
 
