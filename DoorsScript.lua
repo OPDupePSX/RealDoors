@@ -276,6 +276,12 @@ Workspace.ChildAdded:Connect(function(Child)
     if table.find(EntitiesList, Child.Name) then
 
         task.wait(0.25)
+
+        if Child.Name == "A60" or Child.Name == "A120" then
+            
+            PlayerNotification(Entities[Child.Name] .. " has Spawned", "Hide in the nearest closet, bed or fridge!", ErrorPlayer)
+
+        end
         
         if Child.PrimaryPart:FindFirstChild("PlaySound").Playing == true then
 
