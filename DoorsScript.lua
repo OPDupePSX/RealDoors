@@ -120,17 +120,6 @@ local ErrorPlayer = Instance.new("Sound", Character.Head)
 ErrorPlayer.SoundId = "rbxassetid://" .. ErrorSound
 ErrorPlayer.Volume = 2
 
-Player.CharacterAdded:Connect(function(NewCharacter)
-    
-    Character = NewCharacter
-
-    local PointLight = Instance.new("PointLight")
-    PointLight.Brightness = 2.5
-    PointLight.Range = 60
-    PointLight.Parent = NewCharacter.Head
-
-end)
-
 local function SendWebhook(WebhookTitle, WebhookDescription, WebhookColour, MainMessages)
     
     local request = syn.request(
@@ -268,6 +257,14 @@ local function UpdateRoom()
     end
 
 end
+
+Player.CharacterAdded:Connect(function(NewCharacter)
+    
+    Character = NewCharacter
+
+    UpdateRoom()
+
+end)
 
 SendWebhook("**A player has executed the script!**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Account Age**", ["value"] = Player.AccountAge, ["inline"] = false}})
 PlayerNotification("Welcome, " .. Player.Name, "RubyDoors activated! Enjoy the game!", NotificationPlayer)
@@ -441,6 +438,18 @@ RunService.RenderStepped:Connect(function()
     elseif A90Here == false and (Player:GetAttribute("CurrentRoom") <= 49 or Player:GetAttribute("CurrentRoom") >= 51) or GameData.SecretFloor.Value == true then
 
         Character.Humanoid.WalkSpeed = FastSpeed
+
+    end
+
+    if Character then
+        
+        if not Character.Head:FindFirstChild("PointLight") then
+            
+            local PointLight = Instance.new("PointLight", NewCharacter.Head)
+            PointLight.Brightness = 2.5
+            PointLight.Range = 60
+
+        end
 
     end
 
