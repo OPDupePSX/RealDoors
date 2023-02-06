@@ -417,6 +417,8 @@ ReplicatedStorage.EntityInfo.A90.OnClientEvent:Connect(function()
 
                 ControlModule:Enable()
 
+                break
+
             end
 
         end
