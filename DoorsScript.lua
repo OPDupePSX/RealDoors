@@ -515,7 +515,11 @@ task.spawn(function()
         
         if Character.Humanoid then
             
-            TotalTime = TotalTime + 1
+            if Character.Humanoid.Health > 0 then
+                
+                TotalTime = TotalTime + 1
+
+            end
 
         end
 
@@ -527,29 +531,32 @@ RunService.RenderStepped:Connect(function()
     
     if Character.Humanoid then
 
-        TimerText.Text = convertToHMS(TotalTime)
+        if Character.Humanoid.Health > 0 then
+            
+            TimerText.Text = convertToHMS(TotalTime)
         
-        if A90Here == true then
+            if A90Here == true then
+            
+                Camera.CFrame = CFrame.lookAt(Character.Head.Position, Character.Head.Position + A90Look)
         
-            Character.Humanoid.WalkSpeed = 0
-            Camera.CFrame = CFrame.lookAt(Character.Head.Position, Character.Head.Position + A90Look)
-    
-        elseif Player:GetAttribute("CurrentRoom") == 50 and GameData.SecretFloor.Value == false then
-    
-            Character.Humanoid.WalkSpeed = DefaultSpeed
-    
-        elseif A90Here == false and (Player:GetAttribute("CurrentRoom") <= 49 or Player:GetAttribute("CurrentRoom") >= 51) or GameData.SecretFloor.Value == true then
-    
-            Character.Humanoid.WalkSpeed = FastSpeed
-    
-        end
-    
-        if not Character.Head:FindFirstChild("PointLight") then
-                
-            local PointLight = Instance.new("PointLight", NewCharacter.Head)
-            PointLight.Brightness = 2.5
-            PointLight.Range = 60
-    
+            elseif Player:GetAttribute("CurrentRoom") == 50 and GameData.SecretFloor.Value == false then
+        
+                Character.Humanoid.WalkSpeed = DefaultSpeed
+        
+            elseif A90Here == false and (Player:GetAttribute("CurrentRoom") <= 49 or Player:GetAttribute("CurrentRoom") >= 51) or GameData.SecretFloor.Value == true then
+        
+                Character.Humanoid.WalkSpeed = FastSpeed
+        
+            end
+        
+            if not Character.Head:FindFirstChild("PointLight") then
+                    
+                local PointLight = Instance.new("PointLight", NewCharacter.Head)
+                PointLight.Brightness = 2.5
+                PointLight.Range = 60
+        
+            end
+
         end
 
     end
