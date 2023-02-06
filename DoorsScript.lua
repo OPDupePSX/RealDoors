@@ -293,7 +293,7 @@ Workspace.ChildAdded:Connect(function(Child)
 
         if Child.Name == "A60" or Child.Name == "A120" then
 
-            for _, DescendantItem in pairs(Workspace.CurrentRooms[tostring(CurrentDoor)]:GetDescendants()) do
+            for _, DescendantItem in pairs(Workspace.CurrentRooms:GetDescendants()) do
             
                 if DescendantItem.Name == "Rooms_Locker" then
                     
