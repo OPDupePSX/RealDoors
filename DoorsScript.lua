@@ -416,36 +416,40 @@ Workspace.ChildAdded:Connect(function(Child)
 
         end
         
-        if Child.PrimaryPart:FindFirstChild("PlaySound").Playing == true and Child.Name ~= "A60" and Child.Name ~= "A120" then
+        if Child.PrimaryPart:FindFirstChild("PlaySound") then
+            
+            if Child.PrimaryPart:FindFirstChild("PlaySound").Playing == true and Child.Name ~= "A60" and Child.Name ~= "A120" then
 
-            Child.PrimaryPart.Transparency = 0
+                Child.PrimaryPart.Transparency = 0
 
-            PlayerNotification(Entities[Child.Name] .. " has Spawned", "Hide in the nearest closet, bed or fridge!", ErrorPlayer)
+                PlayerNotification(Entities[Child.Name] .. " has Spawned", "Hide in the nearest closet, bed or fridge!", ErrorPlayer)
 
-            local EntityHighlight = Instance.new("Highlight", Child)
-    
-            EntityHighlight.FillColor = ItemColours.FigureRagdoll
-            EntityHighlight.OutlineColor = ItemColours.FigureRagdoll
-    
-            EntityHighlight.OutlineTransparency = 0.25
-            EntityHighlight.FillTransparency = 0.5
+                local EntityHighlight = Instance.new("Highlight", Child)
+        
+                EntityHighlight.FillColor = ItemColours.FigureRagdoll
+                EntityHighlight.OutlineColor = ItemColours.FigureRagdoll
+        
+                EntityHighlight.OutlineTransparency = 0.25
+                EntityHighlight.FillTransparency = 0.5
 
-            task.spawn(function()
-                
-                while task.wait() do
+                task.spawn(function()
                     
-                    if not Child:IsDescendantOf(Workspace) then
+                    while task.wait() do
+                        
+                        if not Child:IsDescendantOf(Workspace) then
 
-                        PlayerNotification(Entities[Child.Name] .. " has Despawned", "Your are safe to continue!", NotificationPlayer)
-    
-                        break
-    
+                            PlayerNotification(Entities[Child.Name] .. " has Despawned", "Your are safe to continue!", NotificationPlayer)
+        
+                            break
+        
+                        end
+
                     end
 
-                end
+                end)
 
-            end)
-
+            end
+            
         end
 
     end
@@ -555,6 +559,7 @@ RunService.RenderStepped:Connect(function()
         if Character.Humanoid.Health > 0 then
             
             TimerText.Text = convertToHMS(TotalTime)
+            CurrentSpeedText.Text = "Current Speed: " .. Character.Humanoid.WalkSpeed
         
             if A90Here == true then
             
