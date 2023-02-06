@@ -297,13 +297,21 @@ Workspace.ChildAdded:Connect(function(Child)
             
                 if DescendantItem.Name == "Rooms_Locker" then
                     
-                    local Highlight = Instance.new("Highlight", DescendantItem)
+                    local LockerHighlight = Instance.new("Highlight", DescendantItem)
     
-                    Highlight.FillColor = ItemColours.Door
-                    Highlight.OutlineColor = ItemColours.Door
+                    LockerHighlight.FillColor = ItemColours.Door
+                    LockerHighlight.OutlineColor = ItemColours.Door
     
-                    Highlight.OutlineTransparency = 0.25
-                    Highlight.FillTransparency = 0.5
+                    LockerHighlight.OutlineTransparency = 0.25
+                    LockerHighlight.FillTransparency = 0.5
+
+                    local EntityHighlight = Instance.new("Highlight", Child)
+    
+                    EntityHighlight.FillColor = ItemColours.FigureRagdoll
+                    EntityHighlight.OutlineColor = ItemColours.FigureRagdoll
+    
+                    EntityHighlight.OutlineTransparency = 0.25
+                    EntityHighlight.FillTransparency = 0.5
     
                 end
     
@@ -316,6 +324,14 @@ Workspace.ChildAdded:Connect(function(Child)
         if Child.PrimaryPart:FindFirstChild("PlaySound").Playing == true and Child.Name ~= "A60" and Child.Name ~= "A120" then
 
             PlayerNotification(Entities[Child.Name] .. " has Spawned", "Hide in the nearest closet, bed or fridge!", ErrorPlayer)
+
+            local EntityHighlight = Instance.new("Highlight", Child)
+    
+                EntityHighlight.FillColor = ItemColours.FigureRagdoll
+                EntityHighlight.OutlineColor = ItemColours.FigureRagdoll
+    
+                EntityHighlight.OutlineTransparency = 0.25
+                EntityHighlight.FillTransparency = 0.5
 
             task.spawn(function()
                 
