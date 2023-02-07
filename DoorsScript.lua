@@ -147,7 +147,7 @@ TimerText.TextColor3 = Color3.fromRGB(255, 255, 255)
 TimerText.TextScaled = true
 TimerText.TextSize = 14.000
 TimerText.TextWrapped = true
-TimerText.TextXAlignment = Enum.TextXAlignment.Left
+TimerText.TextXAlignment = Enum.TextXAlignment.Right
 
 CurrentSpeedText.Name = "CurrentSpeedText"
 CurrentSpeedText.Parent = Background
@@ -163,7 +163,7 @@ CurrentSpeedText.TextColor3 = Color3.fromRGB(255, 255, 255)
 CurrentSpeedText.TextScaled = true
 CurrentSpeedText.TextSize = 14.000
 CurrentSpeedText.TextWrapped = true
-CurrentSpeedText.TextXAlignment = Enum.TextXAlignment.Left
+CurrentSpeedText.TextXAlignment = Enum.TextXAlignment.Right
 
 SeperatorBar.Name = "SeperatorBar"
 SeperatorBar.Parent = Background
@@ -190,7 +190,7 @@ DoorText.TextColor3 = Color3.fromRGB(255, 255, 255)
 DoorText.TextScaled = true
 DoorText.TextSize = 14.000
 DoorText.TextWrapped = true
-DoorText.TextXAlignment = Enum.TextXAlignment.Left
+DoorText.TextXAlignment = Enum.TextXAlignment.Right
 
 EspText.Name = "EspText"
 EspText.Parent = Background
@@ -206,7 +206,7 @@ EspText.TextColor3 = Color3.fromRGB(255, 255, 255)
 EspText.TextScaled = true
 EspText.TextSize = 14.000
 EspText.TextWrapped = true
-EspText.TextXAlignment = Enum.TextXAlignment.Left
+EspText.TextXAlignment = Enum.TextXAlignment.Right
 
 ToggleEspText.Name = "ToggleEspText"
 ToggleEspText.Parent = Background
