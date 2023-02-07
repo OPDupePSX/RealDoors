@@ -623,7 +623,7 @@ UpdateRoom()
 
 Workspace.ChildAdded:Connect(function(Child)
 
-    if _G.Enabled then
+    if _G.Enabled == true then
         
         if Child.Name == "SeekMoving" then
         
@@ -719,7 +719,7 @@ end)
 
 Workspace.ChildRemoved:Connect(function(Child)
     
-    if _G.Enabled then
+    if _G.Enabled == true then
         
         if Child.Name == "A60" or Child.Name == "A120" then
         
@@ -746,7 +746,7 @@ end)
 
 Character.Humanoid.Died:Connect(function()
 
-    if _G.Enabled then
+    if _G.Enabled == true then
         
         PlayerNotification("RIP... You died", "Join a new game and re-execute the script!", NotificationPlayer)
 
@@ -756,7 +756,7 @@ end)
 
 ReplicatedStorage.EntityInfo.AchievementUnlock.OnClientEvent:Connect(function(BadgeName)
     
-    if _G.Enabled then
+    if _G.Enabled == true then
         
         local BadgeInfo = AchievemntModule[BadgeName]
     
@@ -776,7 +776,7 @@ end)
 
 ReplicatedStorage.EntityInfo.A90.OnClientEvent:Connect(function()
     
-    if _G.Enabled then
+    if _G.Enabled == true then
         
         A90Here = true
         A90Look = Workspace.CurrentCamera.CFrame.LookVector
@@ -812,7 +812,7 @@ end)
 
 ReplicatedStorage.EntityInfo.Screech.OnClientEvent:Connect(function()
     
-    if _G.Enabled then
+    if _G.Enabled == true then
         
         PlayerNotification("Screech is here", "Look at screech quickly!", ErrorPlayer)
 
@@ -906,7 +906,7 @@ RunService.RenderStepped:Connect(function()
 
             if Character.Humanoid.Health > 0 then
                 
-                if _G.Enabled then
+                if _G.Enabled == true then
                     
                     TimerText.Text = convertToHMS(TotalTime)
                     CurrentSpeedText.Text = "Current Speed: " .. Character.Humanoid.WalkSpeed
