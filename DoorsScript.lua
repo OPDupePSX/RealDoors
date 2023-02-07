@@ -112,7 +112,7 @@ Background.AnchorPoint = Vector2.new(0, 1)
 Background.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Background.BackgroundTransparency = 0.500
 Background.BorderSizePixel = 0
-Background.Position = UDim2.new(0.991, 0, 0.985, 0)
+Background.Position = UDim2.new(0.0075, 0, 0.985, 0)
 Background.Size = UDim2.new(0.217097506, 0, 0.413383961, 0)
 
 UICorner.CornerRadius = UDim.new(0.0250000004, 0)
@@ -611,6 +611,22 @@ local function UpdateRoom()
             if DescendantItem:IsA("Highlight") then
                 
                 DescendantItem:Destroy()
+
+            end
+
+        end
+
+        for _, PlayerToHighlight in pairs(Players:GetPlayers()) do
+                    
+            if PlayerToHighlight.Character then
+                
+                local PlayerCharacter = PlayerToHighlight.Character
+
+                if PlayerCharacter:FindFirstChild("Highlight") then
+                    
+                    PlayerCharacter:FindFirstChild("Highlight"):Destroy()
+
+                end
 
             end
 
