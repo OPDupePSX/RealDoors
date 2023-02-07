@@ -108,10 +108,11 @@ RubyDoorsGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 Background.Name = "Background"
 Background.Parent = RubyDoorsGui
+Background.AnchorPoint = Vector2.new(0, 1)
 Background.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Background.BackgroundTransparency = 0.500
 Background.BorderSizePixel = 0
-Background.Position = UDim2.new(0.00899999961, 0, 0.0149999997, 0)
+Background.Position = UDim2.new(0.991, 0, 0.985, 0)
 Background.Size = UDim2.new(0.217097506, 0, 0.413383961, 0)
 
 UICorner.CornerRadius = UDim.new(0.0250000004, 0)
