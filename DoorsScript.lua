@@ -511,13 +511,33 @@ local function UpdateRoom()
             
                 end
         
-                local DoorHighlight = Instance.new("Highlight", Workspace.CurrentRooms[tostring(CurrentDoor)].Door.Door)
+                if CurrentDoor ~= 49 and CurrentDoor ~= 50 then
+                    
+                    local DoorHighlight = Instance.new("Highlight", Workspace.CurrentRooms[tostring(CurrentDoor)].Door.Door)
         
-                DoorHighlight.FillColor = ItemColours.Door
-                DoorHighlight.OutlineColor = ItemColours.Door
-        
-                DoorHighlight.OutlineTransparency = 0.25
-                DoorHighlight.FillTransparency = 0.5
+                    DoorHighlight.FillColor = ItemColours.Door
+                    DoorHighlight.OutlineColor = ItemColours.Door
+            
+                    DoorHighlight.OutlineTransparency = 0.25
+                    DoorHighlight.FillTransparency = 0.5
+
+                    if SeekHere == true then
+                        
+                        if Workspace.CurrentRooms[tostring(CurrentDoor + 1)].Door.Door then
+                            
+                            local DoorHighlight2 = Instance.new("Highlight", Workspace.CurrentRooms[tostring(CurrentDoor + 1)].Door.Door)
+            
+                            DoorHighlight2.FillColor = ItemColours.Door
+                            DoorHighlight2.OutlineColor = ItemColours.Door
+                    
+                            DoorHighlight2.OutlineTransparency = 0.25
+                            DoorHighlight2.FillTransparency = 0.5
+
+                        end
+
+                    end
+
+                end
         
             end
         
