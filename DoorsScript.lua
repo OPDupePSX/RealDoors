@@ -42,6 +42,7 @@ local A90Here = false
 local SeekHere = false
 local SpecialEntityHere = false
 local GameData = ReplicatedStorage.GameData
+local PlayerGameStats = ReplicatedStorage.GameStats:FindFirstChild("Player_" .. Player.Name)
 
 local NotificationSound = 4590662766
 local ErrorSound = 5188022160
@@ -803,20 +804,21 @@ end)
 Character.Humanoid.Died:Connect(function()
 
     local CurrentDoor = Player:GetAttribute("CurrentRoom")
+    local DeathCause = PlayerGameStats.Total.DeathCause.Value
 
     if GameData.SecretFloor.Value == true then
 
         if CurrentDoor <= 9 then
                             
-            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-00" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-00" .. CurrentDoor, ["inline"] = false}})
 
         elseif CurrentDoor <= 99 then
 
-            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-0" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-0" .. CurrentDoor, ["inline"] = false}})
 
         elseif CurrentDoor >= 100 then
 
-            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-" .. CurrentDoor, ["inline"] = false}})
 
         end
 
@@ -824,15 +826,15 @@ Character.Humanoid.Died:Connect(function()
 
         if CurrentDoor <= 9 then
                             
-            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "000" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "000" .. CurrentDoor, ["inline"] = false}})
 
         elseif CurrentDoor <= 99 then
 
-            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "00" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "00" .. CurrentDoor, ["inline"] = false}})
 
         elseif CurrentDoor >= 100 then
 
-            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "0" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "0" .. CurrentDoor, ["inline"] = false}})
 
         end
 
