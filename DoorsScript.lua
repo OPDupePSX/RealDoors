@@ -66,6 +66,7 @@ local ItemColours = {
     SkeletonKey = Color3.fromRGB(225, 0, 255);
     LiveBreakerPolePickup = Color3.fromRGB(225, 0, 255);
     FigureRagdoll = Color3.fromRGB(225, 0, 255);
+    RoomsLocker = Color3.fromRGB(0, 43, 255);
     Player = Color3.fromRGB(225, 255, 255);
 
 }
@@ -486,13 +487,11 @@ local function UpdateRoom()
                     for _, DescendantItem in pairs(Workspace.CurrentRooms:GetDescendants()) do
                 
                         if DescendantItem.Name == "Rooms_Locker" then
-        
-                            Child.PrimaryPart.Transparency = 0
                             
-                            local LockerHighlight = Instance.new("Highlight", DescendantItem.PrimaryPart)
+                            local LockerHighlight = Instance.new("Highlight", DescendantItem)
             
-                            LockerHighlight.FillColor = ItemColours.Door
-                            LockerHighlight.OutlineColor = ItemColours.Door
+                            LockerHighlight.FillColor = ItemColours.RoomsLocker
+                            LockerHighlight.OutlineColor = ItemColours.RoomsLocker
             
                             LockerHighlight.OutlineTransparency = 0.25
                             LockerHighlight.FillTransparency = 0.5
