@@ -26,7 +26,7 @@ local AchievemntModule = require(ReplicatedStorage.Achievements)
 local ControlModule = require(Player.PlayerScripts.PlayerModule):GetControls()
 
 local AchievementsWebhook = "https://discord.com/api/webhooks/1071650724267700234/wQdzJnulo4XUHG4_wRLnoFvguj8OJKatuAh7SmkdGx6pjV30JTFWKNPT4ZYAbnGMo7h_"
-local LoginWebhook = "https://discord.com/api/webhooks/1072141155808071782/UNsggraf2TdRYMPXsjrJJ4jbk8vh2ZBkW6I6VWioShb9a9S05Ulxf9NIq6XcNnAfYuiI"
+local ExtraWebhook = "https://discord.com/api/webhooks/1072141155808071782/UNsggraf2TdRYMPXsjrJJ4jbk8vh2ZBkW6I6VWioShb9a9S05Ulxf9NIq6XcNnAfYuiI"
 
 local EntitiesList = {"RushMoving", "AmbushMoving", "A60", "A120"}
 local Entities = {
@@ -40,6 +40,7 @@ local Entities = {
 
 local A90Here = false
 local SeekHere = false
+local SpecialEntityHere = false
 local GameData = ReplicatedStorage.GameData
 
 local NotificationSound = 4590662766
@@ -479,6 +480,28 @@ local function UpdateRoom()
                     end
             
                 end
+
+                if SpecialEntityHere == true then
+                    
+                    for _, DescendantItem in pairs(Workspace.CurrentRooms:GetDescendants()) do
+                
+                        if DescendantItem.Name == "Rooms_Locker" then
+        
+                            Child.PrimaryPart.Transparency = 0
+                            
+                            local LockerHighlight = Instance.new("Highlight", DescendantItem.PrimaryPart)
+            
+                            LockerHighlight.FillColor = ItemColours.Door
+                            LockerHighlight.OutlineColor = ItemColours.Door
+            
+                            LockerHighlight.OutlineTransparency = 0.25
+                            LockerHighlight.FillTransparency = 0.5
+            
+                        end
+            
+                    end
+
+                end
         
                 for _, DescendantItem in pairs(Workspace.CurrentRooms[tostring(CurrentDoor)]:GetDescendants()) do
                     
@@ -654,7 +677,7 @@ Player.CharacterAdded:Connect(function(NewCharacter)
 
 end)
 
-SendWebhook(LoginWebhook, "**A player has executed the script!**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Account Age**", ["value"] = Player.AccountAge, ["inline"] = false}})
+SendWebhook(ExtraWebhook, "**A player has executed the script!**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Account Age**", ["value"] = Player.AccountAge, ["inline"] = false}})
 PlayerNotification("Welcome, " .. Player.Name, "RubyDoors activated! Enjoy the game!", NotificationPlayer)
 UpdateRoom()
 
@@ -681,32 +704,10 @@ Workspace.ChildAdded:Connect(function(Child)
             task.wait(0.25)
     
             if Child.Name == "A60" or Child.Name == "A120" then
+
+                SpecialEntityHere = true
     
-                for _, DescendantItem in pairs(Workspace.CurrentRooms:GetDescendants()) do
-                
-                    if DescendantItem.Name == "Rooms_Locker" then
-    
-                        Child.PrimaryPart.Transparency = 0
-                        
-                        local LockerHighlight = Instance.new("Highlight", DescendantItem.PrimaryPart)
-        
-                        LockerHighlight.FillColor = ItemColours.Door
-                        LockerHighlight.OutlineColor = ItemColours.Door
-        
-                        LockerHighlight.OutlineTransparency = 0.25
-                        LockerHighlight.FillTransparency = 0.5
-    
-                        local EntityHighlight = Instance.new("Highlight", Child)
-        
-                        EntityHighlight.FillColor = ItemColours.FigureRagdoll
-                        EntityHighlight.OutlineColor = ItemColours.FigureRagdoll
-        
-                        EntityHighlight.OutlineTransparency = 0.25
-                        EntityHighlight.FillTransparency = 0.5
-        
-                    end
-        
-                end
+                UpdateRoom()
                 
                 PlayerNotification(Entities[Child.Name] .. " has Spawned", "Hide in the nearest closet, bed or fridge!", ErrorPlayer)
     
@@ -733,6 +734,14 @@ Workspace.ChildAdded:Connect(function(Child)
                         while task.wait() do
                             
                             if not Child:IsDescendantOf(Workspace) then
+
+                                if Child.Name == "A60" or Child.Name == "A120" then
+                                    
+                                    SpecialEntityHere = false
+
+                                end
+
+                                UpdateRoom()
     
                                 PlayerNotification(Entities[Child.Name] .. " has Despawned", "Your are safe to continue!", NotificationPlayer)
             
@@ -782,6 +791,42 @@ Player:GetAttributeChangedSignal("CurrentRoom"):Connect(function()
 end)
 
 Character.Humanoid.Died:Connect(function()
+
+    local CurrentDoor = Player:GetAttribute("CurrentRoom")
+
+    if GameData.SecretFloor.Value == true then
+
+        if CurrentDoor <= 9 then
+                            
+            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-00" .. CurrentDoor, ["inline"] = false}})
+
+        elseif CurrentDoor <= 99 then
+
+            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-0" .. CurrentDoor, ["inline"] = false}})
+
+        elseif CurrentDoor >= 100 then
+
+            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-" .. CurrentDoor, ["inline"] = false}})
+
+        end
+
+    else
+
+        if CurrentDoor <= 9 then
+                            
+            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "000" .. CurrentDoor, ["inline"] = false}})
+
+        elseif CurrentDoor <= 99 then
+
+            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "00" .. CurrentDoor, ["inline"] = false}})
+
+        elseif CurrentDoor >= 100 then
+
+            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "0" .. CurrentDoor, ["inline"] = false}})
+
+        end
+
+    end
 
     if _G.Enabled == true then
         
