@@ -848,20 +848,16 @@ end)
 
 ReplicatedStorage.EntityInfo.AchievementUnlock.OnClientEvent:Connect(function(BadgeName)
     
-    if _G.Enabled == true then
-        
-        local BadgeInfo = AchievemntModule[BadgeName]
+    local BadgeInfo = AchievemntModule[BadgeName]
     
-        if BadgeInfo.Theme == nil then
+    if BadgeInfo.Theme == nil then
             
-            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeColours.Default, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}})
+        SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeColours.Default, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}})
     
-        else
+    else
     
-            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeColours[BadgeInfo.Theme], {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}}) 
+        SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeColours[BadgeInfo.Theme], {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}}) 
     
-        end
-
     end
 
 end)
