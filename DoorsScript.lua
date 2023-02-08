@@ -676,8 +676,19 @@ Player.CharacterAdded:Connect(function(NewCharacter)
 
 end)
 
-SendWebhook(ExtraWebhook, "**A player has executed the script!**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Account Age**", ["value"] = Player.AccountAge, ["inline"] = false}})
-PlayerNotification("Welcome, " .. Player.Name, "RubyDoors activated! Enjoy the game!", NotificationPlayer)
+
+if GameData.SecretFloor.Value == true then
+    
+    SendWebhook(ExtraWebhook, "**A player has executed the script!**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Account Age**", ["value"] = Player.AccountAge, ["inline"] = false}, {["name"] = "**Game Type**", ["value"] = "A-1000", ["inline"] = false}})
+    PlayerNotification("Welcome, " .. Player.Name, "RubyDoors activated! Goodluck with A-1000!", NotificationPlayer)
+
+else
+
+    SendWebhook(ExtraWebhook, "**A player has executed the script!**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Account Age**", ["value"] = Player.AccountAge, ["inline"] = false}, {["name"] = "**Game Type**", ["value"] = "Normal", ["inline"] = false}})
+    PlayerNotification("Welcome, " .. Player.Name, "RubyDoors activated! Enjoy the game!", NotificationPlayer)
+
+end
+
 UpdateRoom()
 
 Workspace.ChildAdded:Connect(function(Child)
