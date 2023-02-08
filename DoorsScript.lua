@@ -848,17 +848,55 @@ end)
 
 ReplicatedStorage.EntityInfo.AchievementUnlock.OnClientEvent:Connect(function(BadgeName)
     
+    local CurrentDoor = Player:GetAttribute("CurrentRoom")
     local BadgeInfo = AchievemntModule[BadgeName]
-    
+
+    local BadgeTheme = BadgeColours.Default
+
     if BadgeInfo.Theme == nil then
-            
-        SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeColours.Default, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}})
-    
+        
+        BadgeTheme = BadgeColours.Default
+
     else
-    
-        SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeColours[BadgeInfo.Theme], {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}}) 
-    
+
+        BadgeTheme = BadgeColours[BadgeInfo.Theme]
+
     end
+
+    if GameData.SecretFloor.Value == true then
+
+        if CurrentDoor <= 9 then
+                            
+            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "A-00" .. CurrentDoor, ["inline"] = false}})
+
+        elseif CurrentDoor <= 99 then
+
+            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "A-0" .. CurrentDoor, ["inline"] = false}})
+
+        elseif CurrentDoor >= 100 then
+
+            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "A-" .. CurrentDoor, ["inline"] = false}})
+
+        end
+
+    else
+
+        if CurrentDoor <= 9 then
+                            
+            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "000" .. CurrentDoor, ["inline"] = false}})
+
+        elseif CurrentDoor <= 99 then
+
+            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "00" .. CurrentDoor, ["inline"] = false}})
+            
+        elseif CurrentDoor >= 100 then
+
+            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "0" .. CurrentDoor, ["inline"] = false}})
+
+        end
+
+    end
+
 
 end)
 
