@@ -956,13 +956,13 @@ end)
 
 task.spawn(function()
     
-    while task.wait(0.001) do
+    while task.wait(1) do
         
         if Character.Humanoid then
             
             if Character.Humanoid.Health > 0 then
                 
-                TotalTime = TotalTime + 0.001
+                TotalTime = TotalTime + 1
 
             end
 
