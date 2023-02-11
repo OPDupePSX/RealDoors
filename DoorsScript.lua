@@ -450,6 +450,9 @@ local function UpdateRoom()
                     DoorText.Text = "Next Door: Game Over"
         
                 end
+
+                Lighting.Ambient = Color3.fromRGB(255, 255, 255)
+                Lighting.Brightness = 0
         
                 for _, DescendantItem in pairs(Workspace.CurrentRooms:GetDescendants()) do
                     
@@ -1066,10 +1069,10 @@ RunService.RenderStepped:Connect(function()
                                 
                                 if Character.Humanoid.Health > 0 then
                                     
-                                    if not Character.Head:FindFirstChild("PointLight") or PlayerLights == 0 then
+                                    if not Character.Head:FindFirstChild("PointLight") then
                                 
                                         local PointLight = Instance.new("PointLight", Character.Head)
-                                        PointLight.Brightness = 2.5
+                                        PointLight.Brightness = 3
                                         PointLight.Range = 60
                                 
                                     end
