@@ -5,6 +5,8 @@ local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 local UserInputService = game:GetService("UserInputService")
 
+local RubyHubData = loadstring(game:HttpGet"https://pastebin.com/raw/VRVvhnJC")()
+
 _G.Enabled = true
 _G.Esp = true
 
@@ -24,9 +26,6 @@ local A90Look = Vector3.new(0, 0, 0)
 
 local AchievemntModule = require(ReplicatedStorage.Achievements)
 local ControlModule = require(Player.PlayerScripts.PlayerModule):GetControls()
-
-local AchievementsWebhook = "https://discord.com/api/webhooks/1071650724267700234/wQdzJnulo4XUHG4_wRLnoFvguj8OJKatuAh7SmkdGx6pjV30JTFWKNPT4ZYAbnGMo7h_"
-local ExtraWebhook = "https://discord.com/api/webhooks/1072141155808071782/UNsggraf2TdRYMPXsjrJJ4jbk8vh2ZBkW6I6VWioShb9a9S05Ulxf9NIq6XcNnAfYuiI"
 
 local EntitiesList = {"RushMoving", "AmbushMoving", "A60", "A120"}
 local Entities = {
@@ -680,12 +679,12 @@ end)
 
 if GameData.SecretFloor.Value == true then
     
-    SendWebhook(ExtraWebhook, "**A player has executed the script!**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Account Age**", ["value"] = Player.AccountAge, ["inline"] = false}, {["name"] = "**Game Type**", ["value"] = "A-1000", ["inline"] = false}})
+    SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has executed the script!**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Account Age**", ["value"] = Player.AccountAge, ["inline"] = false}, {["name"] = "**Game Type**", ["value"] = "A-1000", ["inline"] = false}})
     PlayerNotification("Welcome, " .. Player.Name, "RubyDoors activated! Goodluck with A-1000!", NotificationPlayer)
 
 else
 
-    SendWebhook(ExtraWebhook, "**A player has executed the script!**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Account Age**", ["value"] = Player.AccountAge, ["inline"] = false}, {["name"] = "**Game Type**", ["value"] = "Normal", ["inline"] = false}})
+    SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has executed the script!**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Account Age**", ["value"] = Player.AccountAge, ["inline"] = false}, {["name"] = "**Game Type**", ["value"] = "Normal", ["inline"] = false}})
     PlayerNotification("Welcome, " .. Player.Name, "RubyDoors activated! Enjoy the game!", NotificationPlayer)
 
 end
@@ -810,15 +809,15 @@ Character.Humanoid.Died:Connect(function()
 
         if CurrentDoor <= 9 then
                             
-            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-00" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-00" .. CurrentDoor, ["inline"] = false}})
 
         elseif CurrentDoor <= 99 then
 
-            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-0" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-0" .. CurrentDoor, ["inline"] = false}})
 
         elseif CurrentDoor >= 100 then
 
-            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "A-" .. CurrentDoor, ["inline"] = false}})
 
         end
 
@@ -826,15 +825,15 @@ Character.Humanoid.Died:Connect(function()
 
         if CurrentDoor <= 9 then
                             
-            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "000" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "000" .. CurrentDoor, ["inline"] = false}})
 
         elseif CurrentDoor <= 99 then
 
-            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "00" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "00" .. CurrentDoor, ["inline"] = false}})
 
         elseif CurrentDoor >= 100 then
 
-            SendWebhook(ExtraWebhook, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "0" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has died**", "", tonumber(0xffffff), {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Died To**", ["value"] = DeathCause, ["inline"] = false}, {["name"] = "**Door Number**", ["value"] = "0" .. CurrentDoor, ["inline"] = false}})
 
         end
 
@@ -869,15 +868,15 @@ ReplicatedStorage.EntityInfo.AchievementUnlock.OnClientEvent:Connect(function(Ba
 
         if CurrentDoor <= 9 then
                             
-            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "A-00" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(RubyHubData.Webhooks.Doors.Achievemnts, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "A-00" .. CurrentDoor, ["inline"] = false}})
 
         elseif CurrentDoor <= 99 then
 
-            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "A-0" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(RubyHubData.Webhooks.Doors.Achievemnts, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "A-0" .. CurrentDoor, ["inline"] = false}})
 
         elseif CurrentDoor >= 100 then
 
-            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "A-" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(RubyHubData.Webhooks.Doors.Achievemnts, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "A-" .. CurrentDoor, ["inline"] = false}})
 
         end
 
@@ -885,15 +884,15 @@ ReplicatedStorage.EntityInfo.AchievementUnlock.OnClientEvent:Connect(function(Ba
 
         if CurrentDoor <= 9 then
                             
-            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "000" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(RubyHubData.Webhooks.Doors.Achievemnts, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "000" .. CurrentDoor, ["inline"] = false}})
 
         elseif CurrentDoor <= 99 then
 
-            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "00" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(RubyHubData.Webhooks.Doors.Achievemnts, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "00" .. CurrentDoor, ["inline"] = false}})
             
         elseif CurrentDoor >= 100 then
 
-            SendWebhook(AchievementsWebhook, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "0" .. CurrentDoor, ["inline"] = false}})
+            SendWebhook(RubyHubData.Webhooks.Doors.Achievemnts, "**A player has earned an achievement!**", "", BadgeTheme, {{["name"] = "**DisplayName [Username]**", ["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]", ["inline"] = false}, {["name"] = "**Achievement Name**", ["value"] = BadgeInfo.Title, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**How To Achieve**", ["value"] = BadgeInfo.Reason, ["inline"] = false}, {["name"] = "**Achievement Description**", ["value"] = BadgeInfo.Desc, ["inline"] = false}, {["name"] = "**Door Achieved**", ["value"] = "0" .. CurrentDoor, ["inline"] = false}})
 
         end
 
