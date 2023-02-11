@@ -1058,6 +1058,7 @@ RunService.RenderStepped:Connect(function()
                     if _G.Esp == true then
 
                         Lighting.Ambient = Color3.fromRGB(255, 255, 255)
+                        Lighting.Brightness = 0
                         
                         if Character.Head then
                         
@@ -1069,7 +1070,7 @@ RunService.RenderStepped:Connect(function()
                                 
                                         local PointLight = Instance.new("PointLight", Character.Head)
                                         PointLight.Brightness = 2.5
-                                        PointLight.Range = 45
+                                        PointLight.Range = 60
                                 
                                     end
 
