@@ -1,10 +1,10 @@
 local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 local UserInputService = game:GetService("UserInputService")
-local Lighting = game:GetService("Lighting")
 
 local RubyHubData = loadstring(game:HttpGet"https://pastebin.com/raw/VRVvhnJC")()
 
@@ -34,7 +34,7 @@ local Entities = {
 	RushMoving = "Rush";
 	AmbushMoving = "Ambush";
     A60 = "A-60";
-    A120 = "A-120"
+    A120 = "A-120";
 
 }
 
