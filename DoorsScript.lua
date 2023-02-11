@@ -4,6 +4,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 local UserInputService = game:GetService("UserInputService")
+local Lighting = game:GetService("Lighting")
 
 local RubyHubData = loadstring(game:HttpGet"https://pastebin.com/raw/VRVvhnJC")()
 
@@ -1055,6 +1056,8 @@ RunService.RenderStepped:Connect(function()
                     end
                 
                     if _G.Esp == true then
+
+                        Lighting.Ambient = Color3.fromRGB(255, 255, 255)
                         
                         if Character.Head then
                         
