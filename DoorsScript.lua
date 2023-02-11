@@ -333,7 +333,7 @@ local function UpdateRoom()
 
     if _G.Enabled == true then
 
-        if Character.Humanoid then
+        if Character:FindFirstChild("Humanoid") then
         
             CurrentSpeedText.Text = "Current Speed: " .. Character.Humanoid.WalkSpeed
     
@@ -450,9 +450,6 @@ local function UpdateRoom()
                     DoorText.Text = "Next Door: Game Over"
         
                 end
-
-                Lighting.Ambient = Color3.fromRGB(255, 255, 255)
-                Lighting.Brightness = 0
         
                 for _, DescendantItem in pairs(Workspace.CurrentRooms:GetDescendants()) do
                     
@@ -499,6 +496,22 @@ local function UpdateRoom()
             
                             LockerHighlight.OutlineTransparency = 0.25
                             LockerHighlight.FillTransparency = 0.5
+            
+                        end
+            
+                    end
+
+                else
+
+                    for _, DescendantItem in pairs(Workspace.CurrentRooms:GetDescendants()) do
+                
+                        if DescendantItem.Name == "Rooms_Locker" then
+                            
+                            if DescendantItem:FindFirstChild("Highlight") then
+                                
+                                DescendantItem:FindFirstChild("Highlight"):Destroy()
+
+                            end
             
                         end
             
@@ -675,6 +688,167 @@ end
 Player.CharacterAdded:Connect(function(NewCharacter)
     
     Character = NewCharacter
+
+    RubyDoorsGui = Instance.new("ScreenGui")
+    Background = Instance.new("Frame")
+    UICorner = Instance.new("UICorner")
+    Title = Instance.new("TextLabel")
+    TimerText = Instance.new("TextLabel")
+    CurrentSpeedText = Instance.new("TextLabel")
+    SeperatorBar = Instance.new("Frame")
+    UICorner_2 = Instance.new("UICorner")
+    DoorText = Instance.new("TextLabel")
+    EspText = Instance.new("TextLabel")
+    ToggleEspText = Instance.new("TextLabel")
+    ToggleScriptText = Instance.new("TextLabel")
+    UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
+
+    RubyDoorsGui.Name = "RubyDoorsGui"
+    RubyDoorsGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    RubyDoorsGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+    Background.Name = "Background"
+    Background.Parent = RubyDoorsGui
+    Background.AnchorPoint = Vector2.new(1, 0)
+    Background.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Background.BackgroundTransparency = 0.500
+    Background.BorderSizePixel = 0
+    Background.Position = UDim2.new(0.9925, 0, 0.0075, 0)
+    Background.Size = UDim2.new(0.217097506, 0, 0.413383961, 0)
+
+    UICorner.CornerRadius = UDim.new(0.0250000004, 0)
+    UICorner.Parent = Background
+
+    Title.Name = "Title"
+    Title.Parent = Background
+    Title.AnchorPoint = Vector2.new(0.5, 0)
+    Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Title.BackgroundTransparency = 1.000
+    Title.BorderSizePixel = 0
+    Title.Position = UDim2.new(0.5, 0, 0, 0)
+    Title.Size = UDim2.new(1, 0, 0.153196976, 0)
+    Title.Font = Enum.Font.DenkOne
+    Title.Text = "RubyDoors"
+    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Title.TextScaled = true
+    Title.TextSize = 14.000
+    Title.TextWrapped = true
+
+    TimerText.Name = "TimerText"
+    TimerText.Parent = Background
+    TimerText.AnchorPoint = Vector2.new(0.5, 0)
+    TimerText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TimerText.BackgroundTransparency = 1.000
+    TimerText.BorderSizePixel = 0
+    TimerText.Position = UDim2.new(0.5, 0, 0.209999993, 0)
+    TimerText.Size = UDim2.new(0.905423522, 0, 0.122844934, 0)
+    TimerText.Font = Enum.Font.DenkOne
+    TimerText.Text = "00:00:00"
+    TimerText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TimerText.TextScaled = true
+    TimerText.TextSize = 14.000
+    TimerText.TextWrapped = true
+    TimerText.TextXAlignment = Enum.TextXAlignment.Right
+
+    CurrentSpeedText.Name = "CurrentSpeedText"
+    CurrentSpeedText.Parent = Background
+    CurrentSpeedText.AnchorPoint = Vector2.new(0.5, 0)
+    CurrentSpeedText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    CurrentSpeedText.BackgroundTransparency = 1.000
+    CurrentSpeedText.BorderSizePixel = 0
+    CurrentSpeedText.Position = UDim2.new(0.5, 0, 0.523999989, 0)
+    CurrentSpeedText.Size = UDim2.new(0.905423522, 0, 0.122844934, 0)
+    CurrentSpeedText.Font = Enum.Font.DenkOne
+    CurrentSpeedText.Text = "Current Speed: 20"
+    CurrentSpeedText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CurrentSpeedText.TextScaled = true
+    CurrentSpeedText.TextSize = 14.000
+    CurrentSpeedText.TextWrapped = true
+    CurrentSpeedText.TextXAlignment = Enum.TextXAlignment.Right
+
+    SeperatorBar.Name = "SeperatorBar"
+    SeperatorBar.Parent = Background
+    SeperatorBar.AnchorPoint = Vector2.new(0.5, 0)
+    SeperatorBar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    SeperatorBar.BorderSizePixel = 0
+    SeperatorBar.Position = UDim2.new(0.5, 0, 0.174424171, 0)
+    SeperatorBar.Size = UDim2.new(0.949999988, 0, 0.0180494562, 0)
+
+    UICorner_2.CornerRadius = UDim.new(1, 0)
+    UICorner_2.Parent = SeperatorBar
+
+    DoorText.Name = "DoorText"
+    DoorText.Parent = Background
+    DoorText.AnchorPoint = Vector2.new(0.5, 0)
+    DoorText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    DoorText.BackgroundTransparency = 1.000
+    DoorText.BorderSizePixel = 0
+    DoorText.Position = UDim2.new(0.5, 0, 0.367000014, 0)
+    DoorText.Size = UDim2.new(0.905423522, 0, 0.122844934, 0)
+    DoorText.Font = Enum.Font.DenkOne
+    DoorText.Text = "Next Door: 0001"
+    DoorText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    DoorText.TextScaled = true
+    DoorText.TextSize = 14.000
+    DoorText.TextWrapped = true
+    DoorText.TextXAlignment = Enum.TextXAlignment.Right
+
+    EspText.Name = "EspText"
+    EspText.Parent = Background
+    EspText.AnchorPoint = Vector2.new(0.5, 0)
+    EspText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    EspText.BackgroundTransparency = 1.000
+    EspText.BorderSizePixel = 0
+    EspText.Position = UDim2.new(0.5, 0, 0.680999994, 0)
+    EspText.Size = UDim2.new(0.905423522, 0, 0.122844934, 0)
+    EspText.Font = Enum.Font.DenkOne
+    EspText.Text = "Esp: On"
+    EspText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    EspText.TextScaled = true
+    EspText.TextSize = 14.000
+    EspText.TextWrapped = true
+    EspText.TextXAlignment = Enum.TextXAlignment.Right
+
+    ToggleEspText.Name = "ToggleEspText"
+    ToggleEspText.Parent = Background
+    ToggleEspText.AnchorPoint = Vector2.new(0.5, 0)
+    ToggleEspText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleEspText.BackgroundTransparency = 1.000
+    ToggleEspText.BorderSizePixel = 0
+    ToggleEspText.Position = UDim2.new(0.25, 0, 0.862999976, 0)
+    ToggleEspText.Size = UDim2.new(0.449999988, 0, 0.101999998, 0)
+    ToggleEspText.Font = Enum.Font.DenkOne
+    ToggleEspText.Text = "Toggle Esp: k"
+    ToggleEspText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleEspText.TextScaled = true
+    ToggleEspText.TextSize = 14.000
+    ToggleEspText.TextWrapped = true
+
+    ToggleScriptText.Name = "ToggleScriptText"
+    ToggleScriptText.Parent = Background
+    ToggleScriptText.AnchorPoint = Vector2.new(0.5, 0)
+    ToggleScriptText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleScriptText.BackgroundTransparency = 1.000
+    ToggleScriptText.BorderSizePixel = 0
+    ToggleScriptText.Position = UDim2.new(0.75, 0, 0.862999976, 0)
+    ToggleScriptText.Size = UDim2.new(0.449999988, 0, 0.101999998, 0)
+    ToggleScriptText.Font = Enum.Font.DenkOne
+    ToggleScriptText.Text = "Toggle Script: p"
+    ToggleScriptText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleScriptText.TextScaled = true
+    ToggleScriptText.TextSize = 14.000
+    ToggleScriptText.TextWrapped = true
+
+    UIAspectRatioConstraint.Parent = Background
+    UIAspectRatioConstraint.AspectRatio = 0.867
+
+    NotificationPlayer = Instance.new("Sound", Character.Head)
+    NotificationPlayer.SoundId = "rbxassetid://" .. NotificationSound
+    NotificationPlayer.Volume = 1.5
+
+    ErrorPlayer = Instance.new("Sound", Character.Head)
+    ErrorPlayer.SoundId = "rbxassetid://" .. ErrorSound
+    ErrorPlayer.Volume = 2
 
     UpdateRoom()
 
@@ -961,7 +1135,7 @@ task.spawn(function()
     
     while task.wait(1) do
         
-        if Character.Humanoid then
+        if Character:FindFirstChild("Humanoid") then
             
             if Character.Humanoid.Health > 0 then
                 
@@ -979,7 +1153,7 @@ UserInputService.InputBegan:Connect(function(Key)
     
     if Character ~= nil then
         
-        if Character.Humanoid then
+        if Character:FindFirstChild("Humanoid") then
         
             if Character.Humanoid.Health > 0 then
                 
@@ -1033,7 +1207,7 @@ RunService.RenderStepped:Connect(function()
     
     if Character ~= nil then
         
-        if Character.Humanoid then
+        if Character:FindFirstChild("Humanoid") then
 
             if Character.Humanoid.Health > 0 then
                 
@@ -1059,13 +1233,10 @@ RunService.RenderStepped:Connect(function()
                     end
                 
                     if _G.Esp == true then
-
-                        Lighting.Ambient = Color3.fromRGB(255, 255, 255)
-                        Lighting.Brightness = 0
                         
                         if Character.Head then
                         
-                            if Character.Humanoid then
+                            if Character:FindFirstChild("Humanoid") then
                                 
                                 if Character.Humanoid.Health > 0 then
                                     
