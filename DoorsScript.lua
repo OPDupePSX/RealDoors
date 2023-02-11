@@ -1069,7 +1069,7 @@ RunService.RenderStepped:Connect(function()
                                 
                                         local PointLight = Instance.new("PointLight", Character.Head)
                                         PointLight.Brightness = 2.5
-                                        PointLight.Range = 60
+                                        PointLight.Range = 45
                                 
                                     end
 
