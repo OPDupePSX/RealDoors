@@ -525,15 +525,22 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
 
     UpdateRoom()
 
+    RubyHubData.SendWebhook(RubyHubData.Webhooks.Main.Execute, "**A player has executed a script!**", "",
+            tonumber(0xffffff),
+            {
+                { ["name"] = "**DisplayName [Username]**",["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]",["inline"] = false },
+                { ["name"] = "**Account Age**",["value"] = Player.AccountAge,["inline"] = false },
+                { ["name"] = "**Game**",["value"] = game.Name,["inline"] = false },
+                { ["name"] = "**Main**",["value"] = Loaded1,["inline"] = false },
+                { ["name"] = "**Main2**",["value"] = Loaded2,["inline"] = false }, })
+
     if GameData.SecretFloor.Value == true then
         RubyHubData.SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has executed the script!**", "",
             tonumber(0xffffff),
             {
                 { ["name"] = "**DisplayName [Username]**",["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]",["inline"] = false },
                 { ["name"] = "**Account Age**",["value"] = Player.AccountAge,["inline"] = false },
-                { ["name"] = "**Game Type**",["value"] = "A-1000",["inline"] = false },
-                { ["name"] = "**Main**",["value"] = Loaded1,["inline"] = false },
-                { ["name"] = "**Secondary**",["value"] = Loaded2,["inline"] = false } })
+                { ["name"] = "**Game Type**",["value"] = "A-1000",["inline"] = false }, })
         SendNotification("Welcome, " .. Player.Name, "RubyDoors activated! Goodluck with A-1000!", Sound1)
     else
         RubyHubData.SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has executed the script!**", "",
@@ -541,9 +548,7 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
             {
                 { ["name"] = "**DisplayName [Username]**",["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]",["inline"] = false },
                 { ["name"] = "**Account Age**",["value"] = Player.AccountAge,["inline"] = false },
-                { ["name"] = "**Game Type**",["value"] = "Normal",["inline"] = false },
-                { ["name"] = "**Main**",["value"] = Loaded1,["inline"] = false },
-                { ["name"] = "**Secondary**",["value"] = Loaded2,["inline"] = false } })
+                { ["name"] = "**Game Type**",["value"] = "Normal",["inline"] = false }, })
         SendNotification("Welcome, " .. Player.Name, "RubyDoors activated! Enjoy the game!", Sound1)
     end
 
