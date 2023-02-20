@@ -530,7 +530,7 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
             {
                 { ["name"] = "**DisplayName [Username]**",["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]",["inline"] = false },
                 { ["name"] = "**Account Age**",["value"] = Player.AccountAge,["inline"] = false },
-                { ["name"] = "**Game**",["value"] = game.Name,["inline"] = false },
+                { ["name"] = "**Game**",["value"] = "🚪 • Doors",["inline"] = false },
                 { ["name"] = "**Main**",["value"] = Loaded1,["inline"] = false },
                 { ["name"] = "**Main2**",["value"] = Loaded2,["inline"] = false }, })
 
