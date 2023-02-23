@@ -561,8 +561,20 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
         if _G.Enabled == true then
             if Child.Name == "SeekMoving" then
                 SendNotification("Ready or Not, Here I Come", "Get ready to run from Seek!", Sound3)
-                _G.SeekHere = true
                 UpdateRoom()
+                task.spawn(function()
+                    while task.wait() do
+                        if Child.Figure.Footsteps.Playing == true then
+                            _G.SeekHere = true
+                        end
+                        if _G.SeekHere == true then
+                            if Child.Figure.Footsteps.Playing == false then
+                                _G.SeekHere = false
+                                break
+                            end
+                        end
+                    end
+                end)
             end
             if Child.Name == "Eyes" then
                 SendNotification("Look Away Now", "Eyes have spawned!", Sound4)
@@ -613,7 +625,7 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
     Workspace.ChildRemoved:Connect(function(Child)
         if _G.Enabled == true then
             if table.find(SpecialEntities, Child.Name) then
-                SendNotification(EntitieNames[Child.Name] .. " Has Despawned", "Hide in the nearest area!", Sound1)
+                SendNotification(EntitieNames[Child.Name] .. " Has Despawned", "You are safe to continue!", Sound1)
                 _G.EntityHere = false
                 UpdateRoom()
             end
