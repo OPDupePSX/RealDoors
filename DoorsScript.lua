@@ -525,7 +525,7 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
 
     UpdateRoom()
 
-    RubyHubData.SendWebhook(RubyHubData.Webhooks.Main.Execute, "**A player has executed a script!**", "",
+    RubyHubData.SendWebhook(RubyHubData.Webhooks.Main.Execute, "**A player has executed a script!**", "", "",
             tonumber(0xffffff),
             {
                 { ["name"] = "**DisplayName [Username]**",["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]",["inline"] = false },
@@ -535,7 +535,7 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
                 { ["name"] = "**Main2**",["value"] = Loaded2,["inline"] = false }, })
 
     if GameData.SecretFloor.Value == true then
-        RubyHubData.SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has executed the script!**", "",
+        RubyHubData.SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has executed the script!**", "", "",
             tonumber(0xffffff),
             {
                 { ["name"] = "**DisplayName [Username]**",["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]",["inline"] = false },
@@ -543,7 +543,7 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
                 { ["name"] = "**Game Type**",["value"] = "A-1000",["inline"] = false }, })
         SendNotification("Welcome, " .. Player.Name, "RubyDoors activated! Goodluck with A-1000!", Sound1)
     else
-        RubyHubData.SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has executed the script!**", "",
+        RubyHubData.SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has executed the script!**", "", "",
             tonumber(0xffffff),
             {
                 { ["name"] = "**DisplayName [Username]**",["value"] = Player.DisplayName .. " [@" .. Player.Name .. "]",["inline"] = false },
@@ -665,7 +665,7 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
     Character.Humanoid.Died:Connect(function()
         local DeathDoor = GetRoom("Display", 0)
         local DeathCause = PlayerGameStats.Total.DeathCause.Value
-        RubyHubData.SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has died**", "", tonumber(0xffffff),
+        RubyHubData.SendWebhook(RubyHubData.Webhooks.Doors.Main, "**A player has died**", "", "", tonumber(0xffffff),
             {
                 { ["name"] = "**DisplayName [Username]**",["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]",["inline"] = false },
                 { ["name"] = "**Died To**",["value"] = DeathCause,["inline"] = false },
@@ -684,7 +684,7 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
         else
             BadgeTheme = BadgeColours[BadgeInfo.Theme]
         end
-        RubyHubData.SendWebhook(RubyHubData.Webhooks.Doors.Achievements, "**A player has earned an achievement!**", "",
+        RubyHubData.SendWebhook(RubyHubData.Webhooks.Doors.Achievements, "**A player has earned an achievement!**", "", "",
             BadgeTheme,
             {
                 { ["name"] = "**DisplayName [Username]**",["value"] = "" .. Player.DisplayName .. " [@" .. Player.Name .. "]",["inline"] = false },
