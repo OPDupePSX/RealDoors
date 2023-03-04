@@ -564,14 +564,10 @@ if not Player.PlayerGui:FindFirstChild("RubyDoorsGui") then
                 UpdateRoom()
                 task.spawn(function()
                     while task.wait() do
-                        if Child.Figure.Footsteps.Playing == true then
-                            _G.SeekHere = true
-                        end
-                        if _G.SeekHere == true then
-                            if Child.Figure.Footsteps.Playing == false then
-                                _G.SeekHere = false
-                                break
-                            end
+                        _G.SeekHere = true
+                        if not Child:IsDescendantOf(Workspace) then
+                            _G.SeekHere = false
+                            break
                         end
                     end
                 end)
